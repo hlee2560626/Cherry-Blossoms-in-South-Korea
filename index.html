@@ -1,249 +1,318 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="description"
-        content="Lorem ipsum dolor sit amet, consectetur adipiscing elit.">
-  <meta name="keywords" content="template, sample, html">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>A Fancy Project</title>
-
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
-
-  <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <meta name="description" content="A visual story about cherry blossom flowering dates, temperature, and climate signals in South Korea.">
+  <title>Spring Arrives in Motion | Cherry Blossoms in South Korea</title>
   <link rel="stylesheet" href="./static/css/index.css">
   <link rel="icon" href="./static/images/favicon.png">
 </head>
 <body>
+  <canvas id="petal-field" aria-hidden="true"></canvas>
+  <div class="scroll-meter" aria-hidden="true"><span></span></div>
 
-<section class="hero">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">Cherry Blossoms and the Timing of Spring in South Korea</h1>
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">
-              Yujin Yang and
-            </span>
-            <span class="author-block">
-              Hyewon Park and
-            </span>
-            <span class="author-block">
-              Hyowon Lee
-            </span>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Spring Arrives in Motion home">
+      <span class="brand-mark"></span>
+      <span>Bloom Signal</span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="#map">Map</a>
+      <a href="#temperature">Temperature</a>
+      <a href="#stages">Stages</a>
+      <a href="#trend">Trend</a>
+      <a href="#sources">Sources</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero-section" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">South Korea · Spring 2026 · KMA observations</p>
+        <h1 id="hero-title">Spring Arrives in Motion</h1>
+        <p class="hero-lede">
+          Cherry blossoms do more than decorate the season. Changwon opened the 2026 bloom wave first; Seoul's signal was different: it bloomed the most days earlier than its normal date.
+        </p>
+        <div class="hero-actions" aria-label="Page shortcuts">
+          <a class="button primary" href="#map">Explore the bloom wave</a>
+          <a class="button ghost" href="#evidence">View chart evidence</a>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-label="Bloom summary visual">
+        <div class="orbit-card">
+          <div class="orbit-rings" aria-hidden="true"></div>
+          <img src="./static/images/Picture1.png" alt="2026 cherry blossom flowering dates by region">
+          <div class="hero-stat stat-a">
+            <strong>Mar 24</strong>
+            <span>earliest region</span>
           </div>
-
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">George Mason University Korea</span>
+          <div class="hero-stat stat-b">
+            <strong>Apr 15</strong>
+            <span>latest bloom</span>
           </div>
-
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<section class="section">
-  <div class="container is-max-desktop">
-
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p> Cherry blossom flowering dates are closely connected to regional climate and seasonal temperature patterns in South Korea. This project explores how flowering timing differs across regions and years by using seasonal observation data and ASOS weather data from the Korea Meteorological Administration (KMA). Through a series of visualizations, we examine regional flowering differences in 2026, compare these dates against historical averages, and investigate how temperature build-up before flowering may influence blooming patterns. In addition, we present long-term trend visualizations showing that flowering dates in Korea have consistently trended earlier over time, while specific locations like Bukchuncheon continue to show strong year-to-year variability. Together, these visualizations construct a visual narrative demonstrating how cherry blossoms can serve as an indicator of spring timing, regional climate variation, and long-term environmental change in Korea. </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container is-max-desktop">
-
-    <h2 class="title is-3 has-text-centered">
-      1. Regional Differences in Cherry Blossom Flowering Dates
-    </h2>
-
-    <div class="content has-text-justified">
+    <section class="brief-section" aria-labelledby="brief-title">
+      <div class="section-kicker">Project Narrative</div>
+      <h2 id="brief-title">A seasonal event becomes a climate instrument.</h2>
       <p>
-        Cherry blossom flowering dates in 2026 varied clearly across South Korea. Blossoms appeared in some regions in late March, while in others, they did not emerge until mid-April. This section compares flowering dates by region, then examines whether flowering occurred earlier or later in each region compared to its historical average flowering date.
+        This project uses Korea Meteorological Administration seasonal observation and ASOS weather data to examine how cherry blossom flowering dates varied by region in 2026, how those dates compared with long-term normal dates, and how temperature build-up before flowering helps explain the timing of spring.
       </p>
-    </div>
+      <div class="metric-grid">
+        <article>
+          <span>23</span>
+          <p>regions compared across the 2026 bloom window</p>
+        </article>
+        <article>
+          <span>23 days</span>
+          <p>between Changwon's first bloom and Baengnyeongdo's latest bloom</p>
+        </article>
+        <article>
+          <span>-10 days</span>
+          <p>Seoul's 2026 bloom compared with its normal date, the largest early shift</p>
+        </article>
+        <article>
+          <span>1970s-2030s</span>
+          <p>historical trend and projection window in the long-term view</p>
+        </article>
+      </div>
+    </section>
 
-    <div class="columns is-centered">
-      
-      <div class="column">
+    <section class="insight-section" id="insights" aria-labelledby="insight-title">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Data Diagnostics</div>
+          <h2 id="insight-title">Two fixes that make the story easier to read.</h2>
+        </div>
+        <p>
+          The original charts are useful evidence, but the web version should add analysis that is faster to understand. These two views separate calendar timing from normal-year change, so Seoul is no longer confused with the earliest bloom.
+        </p>
+      </div>
+      <div class="insight-grid">
+        <article class="analysis-card">
+          <div class="chart-topline">
+            <span>Bloom dates by count</span>
+            <strong>Most regions: Mar 26 and Mar 29</strong>
+          </div>
+          <svg id="date-cluster-chart" class="analysis-chart" role="img" aria-label="Count of regions flowering on each date"></svg>
+          <p>Instead of reading 23 separate bars, this view shows when blooms clustered. The wave begins in Changwon, then many regions join on March 26 and March 29.</p>
+        </article>
+        <article class="analysis-card">
+          <div class="chart-topline">
+            <span>Change from normal</span>
+            <strong>19 of 22 listed regions were early</strong>
+          </div>
+          <svg id="normal-shift-chart" class="analysis-chart" role="img" aria-label="Regions grouped by earlier or later than normal flowering"></svg>
+          <p>This fixes the main interpretation issue: Seoul is not the first bloom, but it is the strongest earlier-than-normal signal at 10 days early.</p>
+        </article>
+      </div>
+    </section>
 
-        <figure class="image has-text-centered">
-          <img src="./static/images/Picture1.png"
-               alt="flowering dates by region"
-               style="width: 100%; height: auto;">
-          <figcaption class="is-size-6 has-text-grey">
-            Figure 1. Flowering dates by region in 2026.
-          </figcaption>
+    <section class="story-band" id="map" aria-labelledby="map-title">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">01 · Regional Bloom Wave</div>
+          <h2 id="map-title">The bloom moved north and outward over three weeks.</h2>
+        </div>
+        <p>
+          In 2026, Changwon flowered first on March 24. Seoul did not flower first; it stands out because it was 10 days earlier than its normal flowering date. Select a region to inspect both signals separately.
+        </p>
+      </div>
+
+      <div class="bloom-dashboard">
+        <aside class="region-panel" aria-label="Selected region summary">
+          <p class="panel-label">Selected Region</p>
+          <h3 id="selected-region">Changwon</h3>
+          <dl>
+            <div>
+              <dt>Flowering date</dt>
+              <dd id="selected-date">Mar 24</dd>
+            </div>
+            <div>
+              <dt>Compared with normal</dt>
+              <dd id="selected-normal">5 days earlier</dd>
+            </div>
+            <div>
+              <dt>Bloom wave</dt>
+              <dd id="selected-rank">1st date group</dd>
+            </div>
+            <div>
+              <dt>Climate read</dt>
+              <dd id="selected-note">The earliest 2026 bloom, opening the southern wave.</dd>
+            </div>
+          </dl>
+          <div class="mini-scale" aria-hidden="true">
+            <span>Earlier</span>
+            <i></i>
+            <span>Later</span>
+          </div>
+        </aside>
+
+        <div class="timeline-wrap">
+          <div class="timeline-axis" aria-hidden="true">
+            <span>Mar 24</span>
+            <span>Mar 29</span>
+            <span>Apr 03</span>
+            <span>Apr 08</span>
+            <span>Apr 15</span>
+          </div>
+          <div id="bloom-timeline" class="bloom-timeline" aria-label="Interactive regional flowering dates"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="split-section" id="temperature" aria-labelledby="temperature-title">
+      <div class="split-copy">
+        <div class="section-kicker">02 · Temperature Before Flowering</div>
+        <h2 id="temperature-title">A clearer way to read ASOS temperature.</h2>
+        <p>
+          ASOS stands for Automated Synoptic Observing System: Korea Meteorological Administration weather stations that record observations such as temperature, precipitation, sunshine, and radiation at regular intervals. Here, the hourly ASOS temperature records were summarized into a 21-day pre-bloom average for each region.
+        </p>
+        <ul class="signal-list">
+          <li><span></span> Read left to right as calendar timing: left means earlier bloom, right means later bloom.</li>
+          <li><span></span> Read bottom to top as pre-bloom warmth: higher dots had warmer 21-day conditions.</li>
+          <li><span></span> This avoids connecting unrelated regions with a line and makes exceptions easier to spot.</li>
+        </ul>
+      </div>
+      <div class="scatter-card">
+        <div class="chart-topline">
+          <span>21-day average before flowering</span>
+          <strong>left = earlier bloom</strong>
+        </div>
+        <svg class="temperature-chart" role="img" aria-label="Scatter plot of flowering timing and 21-day pre-bloom temperature"></svg>
+      </div>
+    </section>
+
+    <section class="stage-section" id="stages" aria-labelledby="stage-title">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Phenology Lens</div>
+          <h2 id="stage-title">Reading the bloom as three visible stages.</h2>
+        </div>
+        <p>
+          Figure 4 marks Bukchuncheon's temperature build-up with three biological checkpoints. These photo cues make the dashed lines easier to read: first budburst, then flowering, then full bloom.
+        </p>
+      </div>
+      <div class="stage-grid">
+        <article class="stage-card">
+          <img src="./static/images/stage-budburst.jpg" alt="Cherry blossom buds beginning to open on a branch">
+          <div>
+            <span>01</span>
+            <h3>Budburst</h3>
+            <p>Mar 24 · the buds open and the tree starts visibly responding to accumulated warmth.</p>
+          </div>
+        </article>
+        <article class="stage-card">
+          <img src="./static/images/stage-flowering.jpg" alt="Cherry blossoms opening on a branch">
+          <div>
+            <span>02</span>
+            <h3>Flowering</h3>
+            <p>Apr 04 · blossoms become visible, matching the key event used in the regional comparison.</p>
+          </div>
+        </article>
+        <article class="stage-card">
+          <img src="./static/images/stage-full-bloom.jpg" alt="Cherry blossoms in full bloom across a branch">
+          <div>
+            <span>03</span>
+            <h3>Full Bloom</h3>
+            <p>Apr 08 · the canopy reaches peak bloom after several more warm days.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="trend-section" id="trend" aria-labelledby="trend-title">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">03 · Long-Term Signal</div>
+          <h2 id="trend-title">Korea's average flowering date is drifting earlier.</h2>
+        </div>
+        <p>
+          Historical data varies year to year, yet the national trend moves steadily toward earlier spring flowering. Bukchuncheon shows the same broad movement with stronger local variability.
+        </p>
+      </div>
+      <div class="trend-grid">
+        <article class="trend-card large">
+          <img src="./static/images/전국 개화 추세 그래프.png" alt="Long-term national average cherry blossom flowering trend in Korea">
+          <div>
+            <h3>National trend</h3>
+            <p>The historical average advances over time, and the projection continues that earlier flowering direction.</p>
+          </div>
+        </article>
+        <article class="trend-card">
+          <img src="./static/images/북춘천 개화 추세 그래프.png" alt="Bukchuncheon cherry blossom flowering trend and variability">
+          <div>
+            <h3>Bukchuncheon variability</h3>
+            <p>Local conditions create larger year-to-year swings even when the long-term direction remains visible.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="evidence-section" id="evidence" aria-labelledby="evidence-title">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Chart Evidence</div>
+          <h2 id="evidence-title">Original figures, redesigned as an evidence wall.</h2>
+        </div>
+        <p>
+          The project keeps the original analytical charts available for inspection while the surrounding website turns them into a more guided visual story.
+        </p>
+      </div>
+      <div class="evidence-grid">
+        <figure>
+          <img src="./static/images/Picture1.png" alt="Flowering dates by region in 2026">
+          <figcaption>Figure 1 · Regional flowering dates in 2026</figcaption>
         </figure>
-
-        <div class="content has-text-justified">
-          <p>
-            The first visualization shows clear regional differences in cherry blossom flowering dates across Korea in 2026. Flowering dates were spread across several weeks, ranging from March 24 in Changwon to April 15 in Baengnyeongdo. Flowering occurred relatively early in some regions, while others experienced noticeably later blooming periods. This pattern suggests that spring arrives at different times depending on the region.
-          </p>
-        </div>
-      </div>
-
-      <div class="column">
-        
-        <figure class="image has-text-centered">
-          <img src="./static/images/Picture2.png"
-               alt="days compared to normal flowering dates"
-               style="width: 100%; height: auto;">
-          <figcaption class="is-size-6 has-text-grey">
-            Figure 2. Difference between 2026 flowering dates and long-term normal dates.
-          </figcaption>
+        <figure>
+          <img src="./static/images/Picture2.png" alt="Difference between 2026 flowering dates and long-term normal dates">
+          <figcaption>Figure 2 · Difference from normal flowering dates</figcaption>
         </figure>
-
-        <div class="content has-text-justified">
-          <p>
-            The second visualization compares 2026 flowering dates with long-term normal flowering dates. Most regions bloomed earlier than normal. Seoul showed the largest early difference, blooming 10 days earlier than normal. Cheongju was 8 days earlier, while Incheon and Bukchuncheon were 7 days earlier. However, some regions were exceptions: Seogwipo bloomed 9 days later than normal, and Jeju bloomed 3 days later. This shows that the overall pattern was earlier flowering in 2026, but the pattern was not exactly the same everywhere.
-          </p>
-        </div>
+        <figure>
+          <div class="figure-interpretation">
+            <div class="chart-topline">
+              <span>Reinterpreted Figure 3</span>
+              <strong>No connecting line</strong>
+            </div>
+            <svg class="temperature-chart compact" role="img" aria-label="Reinterpreted scatter plot of flowering timing and 21-day pre-bloom temperature"></svg>
+          </div>
+          <figcaption>Figure 3 · Reinterpreted ASOS temperature lens</figcaption>
+        </figure>
+        <figure>
+          <img src="./static/images/Picture3.png" alt="Temperature build-up before flowering in Bukchuncheon">
+          <figcaption>Figure 4 · Bukchuncheon temperature build-up: budburst, flowering, and full bloom markers</figcaption>
+        </figure>
       </div>
+    </section>
 
+    <section class="closing-section" aria-labelledby="closing-title">
+      <div class="closing-card">
+        <div class="section-kicker">Conclusion</div>
+        <h2 id="closing-title">Cherry blossoms are a calendar written by climate.</h2>
+        <p>
+          The 2026 bloom pattern shows clear regional differences, mostly earlier-than-normal flowering, and a visible relationship between accumulated warmth and bloom timing. Over decades, the national flowering date trends earlier, making cherry blossoms both a cultural marker of spring and a sensitive visual indicator of environmental change.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="sources">
+    <div>
+      <p class="footer-title">References and Data Sources</p>
+      <p>Korea Meteorological Administration (KMA), Seasonal Observation Data and ASOS Weather Observation Data. Accessed May 2026.</p>
+      <p>Created for CDS 301 / 501: Scientific Information and Data Visualization, George Mason University Korea.</p>
     </div>
-
-  </div>
-</section>
-
-<section class="section">
-  <div class="container is-max-desktop">
-<h2 class="title is-3 has-text-centered">2. Temperature Patterns Before Flowering</h2>
-    <figure class="image has-text-centered">
-      <img src="./static/images/KakaoTalk_20260517_142425791.png" alt="avg temperature b4 flowering">
-<figcaption class="is-size-6 has-text-grey">
-  Figure 3. Regional average temperatures and flowering dates in 2026.  
-</figcaption>
-    </figure>
-
-    <div class="content has-text-justified">
-      <p>
-        This visualization compares regional average temperatures with cherry blossom flowering dates in 2026. In warmer southern regions such as Busan and Changwon, flowering occurred earlier, while in colder northern regions such as Bukchuncheon and Baengnyeongdo, blossoms appeared later. Overall, the graph suggests a clear relationship between higher temperatures and earlier flowering dates. This reinforces the conclusion that regional climate conditions strongly influence the timing of the spring bloom.
-      </p>
+    <div class="footer-links">
+      <a href="https://data.kma.go.kr/data/seasonObs/seasonObsDataList.do?pgmNo=648" target="_blank" rel="noopener">Seasonal data</a>
+      <a href="https://data.kma.go.kr/data/grnd/selectAsosRltmList.do?pgmNo=36" target="_blank" rel="noopener">ASOS data</a>
+      <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>
     </div>
+  </footer>
 
-    <figure class="image has-text-centered">
-      <img src="./static/images/Picture3.png" alt="example: Northern Chuncheon">
-<figcaption class="is-size-6 has-text-grey">
-  Figure 4. Temperature build-up before flowering in Bukchuncheon, 2026.  
-</figcaption>
-    </figure>
-
-    <div class="content has-text-justified">
-      <p>
-        Figure 4 focuses on temperature changes in Bukchuncheon before flowering. The graph shows that temperatures gradually increased from February to early April, especially before budburst and flowering. Rather than responding to a single warm day, cherry blossoms appear to respond to a sustained accumulation of warmer temperatures over time. This suggests that temperature accumulation before flowering is a key factor in determining the exact onset of the bloom.
-      </p>
-    </div>
-    
-  </div>
-</section>
-
-<section class="section">
-  <div class="container is-max-desktop">
-<h2 class="title is-3 has-text-centered">3. Long-Term Changes in Cherry Blossom Flowering</h2>
-    <figure class="image has-text-centered">
-<div style="text-align: center;">
-  <img src="./static/images/전국 개화 추세 그래프.png"
-       alt="flowering trend (national)"
-       class="img-small75"
-       style="display: inline-block; width: 75%; height: auto;">
-</div>
-<figcaption class="is-size-6 has-text-grey">
-  Figure 5. Long-term trend in average cherry blossom flowering dates across Korea.
-</figcaption>
-
-    </figure>
-
-    <div class="content has-text-justified">
-      <p>
-        The fifth visualization shows long-term changes in average cherry blossom flowering dates across Korea. Although flowering dates vary from year to year, the overall historical trend has steadily advanced over time, indicating earlier flowering dates in recent decades. Forecasts based on this data indicate that this trend is likely to persist into the future. Ultimately, this highlights that spring flowering timing in Korea has changed gradually over time.
-      </p>
-    </div>
-
-     <figure class="image has-text-centered">
-<div style="text-align: center;">
-  <img src="./static/images/북춘천 개화 추세 그래프.png"
-       alt="flowering trend (bukchuncheon)"
-       class="img-small75"
-       style="display: inline-block; width: 75%; height: auto;">
-</div>
-<figcaption class="is-size-6 has-text-grey">
-  Figure 6. Local Variability in Bukchuncheon (Northern Chuncheon)
-</figcaption>
-
-    </figure>
-
-    <div class="content has-text-justified">
-      <p>
-        Figure 6 focuses on Bukchuncheon as a local case study. In contrast to the national average trend, the Bukchuncheon data show stronger year-to-year fluctuations in flowering timing. Even though the overall trend still shifts steadily toward earlier flowering dates, local variability remains a substantial factor. This suggests that long-term flowering patterns are influenced not only by broader climate trends, but also by regional environmental conditions and annual weather variations.
-      </p>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Outro</h2>
-    <div class="content">
-      <p>
-        Through these visualizations, our project explored how cherry blossom flowering patterns vary across regions, respond to temperature conditions, and change over time in Korea. The results showed that flowering dates exhibited clear regional differences in 2026, that blossoms appeared earlier than their historical averages in many regions, and that a sustained accumulation of warmer temperatures before flowering appears to influence the exact timing of the bloom. In addition, long-term trend visualizations suggested that flowering dates in Korea have consistently trended earlier over time, while specific locations such as Bukchuncheon continue to show noticeable year-to-year variability.<br>
-        Ultimately, these findings highlight that cherry blossoms are more than just a seasonal event. They can also serve as a powerful visual indicator of regional climate variations, the timing of spring, and long-term environmental changes in Korea. Future iterations of this project could be expanded by including additional climate variables, broader regional comparisons, and interactive web-based visualizations.
-      </p>
-    </div>
-  </div>
-</section>
-
-  <section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">References and Data Sources</h2>
-    <div class="content has-text-justified">
-      <p>
-        Korea Meteorological Administration (KMA). “Seasonal Observation Data.”
-        <em>KMA Weather Data Service System</em>. Accessed May 2026.
-        <a href="https://data.kma.go.kr/data/seasonObs/seasonObsDataList.do?pgmNo=648" target="_blank" style="overflow-wrap: anywhere;">
-          https://data.kma.go.kr/data/seasonObs/seasonObsDataList.do?pgmNo=648
-        </a>
-      </p>
-      <p>
-        Korea Meteorological Administration (KMA). “ASOS Weather Observation Data.” 
-        <em>KMA Weather Data Service System</em>. Accessed May 2026.
-        <a href="https://data.kma.go.kr/data/grnd/selectAsosRltmList.do?pgmNo=36" target="_blank" style="overflow-wrap: anywhere;">
-          https://data.kma.go.kr/data/grnd/selectAsosRltmList.do?pgmNo=36
-        </a>
-      </p>
-    </div>
-  </div>
-</section>
-
-
-<footer class='footer footer-compact'>
-  <div class="container">
-    <div class="content has-text-centered">
-      <p>
-       This website was created as coursework for <strong>CDS 301 / 501: Scientific Information and Data Visualization (Spring 2026) at George Mason Korea</strong>.
-      </p>
-      <p>
-        This website is licensed under a <a rel="license"
-        href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
-      </p>
-      <p>
-        Template design is based on the example site available at <a href="https://utkuozbulak.github.io/cds_301_template_website/" target="_blank" rel="noopener">CDS 301 Template Website</a>, which itself uses a layout from the <a href="https://github.com/nerfies/nerfies.github.io" target="_blank" rel="noopener">Nerfies project site</a>.
-      </p>
-    </div>
-  </div>
-</footer>
-
-
+  <script src="./static/js/bloom.js"></script>
 </body>
 </html>
-
