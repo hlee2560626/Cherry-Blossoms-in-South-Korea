@@ -33,29 +33,29 @@ const selectedNote = document.querySelector("#selected-note");
 const scrollMeter = document.querySelector(".scroll-meter span");
 
 const mapPositions = {
-  Seoul: { x: 318, y: 150 },
-  Incheon: { x: 284, y: 152 },
-  Suwon: { x: 309, y: 182 },
-  Hongseong: { x: 278, y: 230 },
-  Cheongju: { x: 330, y: 236 },
-  Daejeon: { x: 335, y: 278 },
-  Jeonju: { x: 315, y: 336 },
-  Gwangju: { x: 292, y: 392 },
-  Mokpo: { x: 254, y: 424 },
-  Yeosu: { x: 356, y: 418 },
-  Daegu: { x: 430, y: 342 },
-  Andong: { x: 418, y: 282 },
-  Pohang: { x: 494, y: 330 },
-  Ulsan: { x: 488, y: 390 },
-  Busan: { x: 466, y: 424 },
-  Changwon: { x: 430, y: 414 },
-  Bukchuncheon: { x: 340, y: 92 },
-  Bukgangneung: { x: 444, y: 110 },
-  Ulleungdo: { x: 568, y: 160 },
-  Jeju: { x: 230, y: 522 },
-  Seogwipo: { x: 246, y: 548 },
-  Heuksando: { x: 150, y: 390 },
-  Baengnyeongdo: { x: 172, y: 82 }
+  Seoul: { lat: 37.57, lon: 126.98 },
+  Incheon: { lat: 37.46, lon: 126.70 },
+  Suwon: { lat: 37.26, lon: 127.03 },
+  Hongseong: { lat: 36.60, lon: 126.66 },
+  Cheongju: { lat: 36.64, lon: 127.49 },
+  Daejeon: { lat: 36.35, lon: 127.38 },
+  Jeonju: { lat: 35.82, lon: 127.15 },
+  Gwangju: { lat: 35.16, lon: 126.85 },
+  Mokpo: { lat: 34.81, lon: 126.39 },
+  Yeosu: { lat: 34.76, lon: 127.66 },
+  Daegu: { lat: 35.87, lon: 128.60 },
+  Andong: { lat: 36.57, lon: 128.73 },
+  Pohang: { lat: 36.02, lon: 129.34 },
+  Ulsan: { lat: 35.54, lon: 129.31 },
+  Busan: { lat: 35.18, lon: 129.08 },
+  Changwon: { lat: 35.23, lon: 128.68 },
+  Bukchuncheon: { lat: 37.88, lon: 127.73 },
+  Bukgangneung: { lat: 37.75, lon: 128.90 },
+  Ulleungdo: { lat: 37.48, lon: 130.90 },
+  Jeju: { lat: 33.50, lon: 126.53 },
+  Seogwipo: { lat: 33.25, lon: 126.56 },
+  Heuksando: { lat: 34.68, lon: 125.43 },
+  Baengnyeongdo: { lat: 37.97, lon: 124.63 }
 };
 
 const nationalTrendData = [
@@ -358,6 +358,18 @@ function drawKoreaHeatmap() {
 
   const width = 720;
   const height = 610;
+  const bounds = { minLon: 124.2, maxLon: 131.25, minLat: 33.05, maxLat: 38.35 };
+  const margin = { top: 38, right: 56, bottom: 42, left: 52 };
+  const innerW = width - margin.left - margin.right;
+  const innerH = height - margin.top - margin.bottom;
+  const project = ({ lon, lat }) => ({
+    x: margin.left + ((lon - bounds.minLon) / (bounds.maxLon - bounds.minLon)) * innerW,
+    y: margin.top + (1 - ((lat - bounds.minLat) / (bounds.maxLat - bounds.minLat))) * innerH
+  });
+  const pathFromLonLat = (points) => points.map((point, index) => {
+    const p = project(point);
+    return `${index ? "L" : "M"} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`;
+  }).join(" ");
   svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
   svg.innerHTML = "";
 
@@ -374,38 +386,93 @@ function drawKoreaHeatmap() {
   `;
   svg.appendChild(defs);
 
+  const sea = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+  sea.setAttribute("x", "18");
+  sea.setAttribute("y", "16");
+  sea.setAttribute("width", width - 36);
+  sea.setAttribute("height", height - 36);
+  sea.setAttribute("rx", "34");
+  sea.setAttribute("fill", "rgba(142, 184, 221, 0.06)");
+  svg.appendChild(sea);
+
+  const grid = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  [125, 126, 127, 128, 129, 130, 131].forEach((lon) => {
+    const a = project({ lon, lat: bounds.minLat });
+    const b = project({ lon, lat: bounds.maxLat });
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", a.x);
+    line.setAttribute("x2", b.x);
+    line.setAttribute("y1", a.y);
+    line.setAttribute("y2", b.y);
+    line.setAttribute("stroke", "rgba(89, 73, 84, 0.055)");
+    grid.appendChild(line);
+  });
+  [34, 35, 36, 37, 38].forEach((lat) => {
+    const a = project({ lon: bounds.minLon, lat });
+    const b = project({ lon: bounds.maxLon, lat });
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", a.x);
+    line.setAttribute("x2", b.x);
+    line.setAttribute("y1", a.y);
+    line.setAttribute("y2", b.y);
+    line.setAttribute("stroke", "rgba(89, 73, 84, 0.055)");
+    grid.appendChild(line);
+  });
+  svg.appendChild(grid);
+
   const land = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  land.setAttribute("d", "M344 42 C430 60 493 108 520 178 C550 258 520 316 498 380 C474 454 416 500 342 514 C274 528 220 492 198 436 C176 382 202 335 196 280 C190 220 228 184 238 134 C247 84 286 34 344 42 Z");
+  land.setAttribute("d", `${pathFromLonLat([
+    { lon: 126.20, lat: 37.95 }, { lon: 126.72, lat: 38.25 }, { lon: 127.72, lat: 38.18 },
+    { lon: 128.86, lat: 37.77 }, { lon: 129.44, lat: 36.86 }, { lon: 129.38, lat: 35.95 },
+    { lon: 129.20, lat: 35.18 }, { lon: 128.55, lat: 34.82 }, { lon: 127.70, lat: 34.66 },
+    { lon: 126.86, lat: 34.42 }, { lon: 126.10, lat: 34.62 }, { lon: 125.75, lat: 35.22 },
+    { lon: 126.00, lat: 35.90 }, { lon: 125.88, lat: 36.55 }, { lon: 126.20, lat: 37.18 },
+    { lon: 126.20, lat: 37.95 }
+  ])} Z`);
   land.setAttribute("fill", "rgba(255,255,255,0.72)");
   land.setAttribute("stroke", "rgba(184,50,102,0.18)");
   land.setAttribute("stroke-width", "3");
   svg.appendChild(land);
 
   const jeju = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
-  jeju.setAttribute("cx", "238");
-  jeju.setAttribute("cy", "535");
-  jeju.setAttribute("rx", "58");
-  jeju.setAttribute("ry", "22");
+  const jejuCenter = project({ lon: 126.54, lat: 33.38 });
+  jeju.setAttribute("cx", jejuCenter.x);
+  jeju.setAttribute("cy", jejuCenter.y);
+  jeju.setAttribute("rx", "54");
+  jeju.setAttribute("ry", "20");
   jeju.setAttribute("fill", "rgba(255,255,255,0.68)");
   jeju.setAttribute("stroke", "rgba(184,50,102,0.16)");
   jeju.setAttribute("stroke-width", "3");
   svg.appendChild(jeju);
 
+  const labelOffsets = {
+    Seoul: { dx: 16, dy: -12 },
+    Bukchuncheon: { dx: 14, dy: -12 },
+    Baengnyeongdo: { dx: 14, dy: -12 },
+    Seogwipo: { dx: 14, dy: 18 },
+    Changwon: { dx: -96, dy: -10 },
+    Busan: { dx: 12, dy: 18 },
+    Ulleungdo: { dx: 16, dy: -8 },
+    Heuksando: { dx: 14, dy: -10 }
+  };
+
   bloomData.forEach((entry) => {
-    const pos = mapPositions[entry.region];
-    if (!pos) return;
+    const coords = mapPositions[entry.region];
+    if (!coords) return;
+    const pos = project(coords);
     const late = entry.day > 7;
     const glow = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     glow.setAttribute("cx", pos.x);
     glow.setAttribute("cy", pos.y);
-    glow.setAttribute("r", late ? "42" : "50");
+    glow.setAttribute("r", late ? "30" : "34");
     glow.setAttribute("fill", late ? "url(#mapGlowLate)" : "url(#mapGlowEarly)");
     svg.appendChild(glow);
   });
 
   bloomData.forEach((entry) => {
-    const pos = mapPositions[entry.region];
-    if (!pos) return;
+    const coords = mapPositions[entry.region];
+    if (!coords) return;
+    const pos = project(coords);
     const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
     group.setAttribute("role", "button");
     group.setAttribute("tabindex", "0");
@@ -429,10 +496,11 @@ function drawKoreaHeatmap() {
     circle.setAttribute("stroke-width", entry.region === "Changwon" ? "5" : "2.5");
     group.appendChild(circle);
 
-    if (["Changwon", "Seoul", "Bukchuncheon", "Baengnyeongdo", "Seogwipo", "Busan"].includes(entry.region)) {
+    if (Object.hasOwn(labelOffsets, entry.region)) {
+      const offset = labelOffsets[entry.region];
       const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
-      label.setAttribute("x", pos.x + 12);
-      label.setAttribute("y", pos.y - 10);
+      label.setAttribute("x", pos.x + offset.dx);
+      label.setAttribute("y", pos.y + offset.dy);
       label.setAttribute("class", "map-label");
       label.textContent = entry.region;
       group.appendChild(label);
@@ -442,10 +510,10 @@ function drawKoreaHeatmap() {
   });
 
   const north = document.createElementNS("http://www.w3.org/2000/svg", "text");
-  north.setAttribute("x", "596");
-  north.setAttribute("y", "62");
+  north.setAttribute("x", width - 208);
+  north.setAttribute("y", "52");
   north.setAttribute("class", "map-note");
-  north.textContent = "schematic map for spatial reading";
+  north.textContent = "station positions use approximate coordinates";
   svg.appendChild(north);
 }
 
