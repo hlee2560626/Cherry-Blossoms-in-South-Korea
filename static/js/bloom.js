@@ -813,8 +813,8 @@ function drawTrendChart(svg, data, config) {
   if (!svg) return;
 
   const width = 980;
-  const height = 520;
-  const margin = { top: 44, right: 40, bottom: 74, left: 96 };
+  const height = 560;
+  const margin = { top: 56, right: 48, bottom: 74, left: 96 };
   const innerW = width - margin.left - margin.right;
   const innerH = height - margin.top - margin.bottom;
   const minYear = config.minYear;
@@ -826,6 +826,12 @@ function drawTrendChart(svg, data, config) {
   const fit = linearFit(data);
   const projectionStart = 2026;
   const projectedYears = Array.from({ length: maxYear - projectionStart + 1 }, (_, index) => projectionStart + index);
+  const residuals = data.map((point) => point.day - fit.predict(point.year));
+  const residualStd = Math.sqrt(residuals.reduce((sum, value) => sum + value * value, 0) / residuals.length);
+  const uncertaintyScale = projectedYears.map((_, index) => {
+    if (projectedYears.length === 1) return 1;
+    return 0.5 + (index / (projectedYears.length - 1));
+  });
 
   svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
   svg.innerHTML = "";
@@ -869,10 +875,17 @@ function drawTrendChart(svg, data, config) {
   });
 
   const uncertainty = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  const uncertaintyTop = projectedYears.map((year) => `${x(year)},${y(fit.predict(year) + config.band)}`).join(" ");
-  const uncertaintyBottom = projectedYears.slice().reverse().map((year) => `${x(year)},${y(fit.predict(year) - config.band)}`).join(" ");
+  const uncertaintyTop = projectedYears.map((year, index) => {
+    const band = residualStd * uncertaintyScale[index];
+    return `${x(year)},${y(fit.predict(year) + band)}`;
+  }).join(" ");
+  const uncertaintyBottom = projectedYears.slice().reverse().map((year, reverseIndex) => {
+    const index = projectedYears.length - 1 - reverseIndex;
+    const band = residualStd * uncertaintyScale[index];
+    return `${x(year)},${y(fit.predict(year) - band)}`;
+  }).join(" ");
   uncertainty.setAttribute("d", `M ${uncertaintyTop} L ${uncertaintyBottom} Z`);
-  uncertainty.setAttribute("fill", "rgba(142, 184, 221, 0.18)");
+  uncertainty.setAttribute("fill", "rgba(88, 81, 88, 0.13)");
   svg.appendChild(uncertainty);
 
   const observedPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -953,22 +966,74 @@ function drawTrendChart(svg, data, config) {
   note.setAttribute("class", "chart-note");
   note.textContent = "Projection starts";
   svg.appendChild(note);
+
+  const legendItems = [
+    { label: config.observedLabel, color: "#8eb8dd", marker: true },
+    { label: "Historical linear trend", color: "#e85d8d" },
+    { label: "Projected continuation of trend", color: "#6f9f82", dash: "10 8" },
+    { label: "Projection uncertainty range", color: "rgba(88, 81, 88, 0.18)", area: true }
+  ];
+  const legendX = margin.left + 4;
+  const legendY = height - margin.bottom - 86;
+
+  legendItems.forEach((item, index) => {
+    const rowY = legendY + index * 22;
+
+    if (item.area) {
+      const swatch = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      swatch.setAttribute("x", legendX);
+      swatch.setAttribute("y", rowY - 11);
+      swatch.setAttribute("width", 34);
+      swatch.setAttribute("height", 12);
+      swatch.setAttribute("rx", 3);
+      swatch.setAttribute("fill", item.color);
+      svg.appendChild(swatch);
+    } else {
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute("x1", legendX);
+      line.setAttribute("x2", legendX + 34);
+      line.setAttribute("y1", rowY - 5);
+      line.setAttribute("y2", rowY - 5);
+      line.setAttribute("stroke", item.color);
+      line.setAttribute("stroke-width", "4");
+      if (item.dash) line.setAttribute("stroke-dasharray", item.dash);
+      svg.appendChild(line);
+
+      if (item.marker) {
+        const marker = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        marker.setAttribute("cx", legendX + 17);
+        marker.setAttribute("cy", rowY - 5);
+        marker.setAttribute("r", "4");
+        marker.setAttribute("fill", "#3f9bc9");
+        marker.setAttribute("stroke", "#fff");
+        marker.setAttribute("stroke-width", "1.5");
+        svg.appendChild(marker);
+      }
+    }
+
+    const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    label.setAttribute("x", legendX + 44);
+    label.setAttribute("y", rowY);
+    label.setAttribute("class", "legend-label");
+    label.textContent = item.label;
+    svg.appendChild(label);
+  });
 }
 
 function drawTrendCharts() {
   drawTrendChart(document.querySelector("#national-trend-chart"), nationalTrendData, {
-    title: "Cherry blossoms are blooming earlier over time in Korea",
+    title: "Cherry Blossoms Are Blooming Earlier Over Time in Korea",
+    observedLabel: "Observed national average flowering date",
     minYear: 1970,
     maxYear: 2035,
-    ticks: [1970, 1980, 1990, 2000, 2010, 2020, 2026, 2030, 2035],
-    band: 4.5
+    ticks: [1970, 1980, 1990, 2000, 2010, 2020, 2026, 2030, 2035]
   });
   drawTrendChart(document.querySelector("#bukchuncheon-trend-chart"), bukchuncheonTrendData, {
-    title: "Bukchuncheon varies year to year, but the trend still points earlier",
+    title: "Local Flowering Patterns in Bukchuncheon Vary From Year to Year",
+    observedLabel: "Observed Bukchuncheon flowering date",
     minYear: 2016,
     maxYear: 2030,
-    ticks: [2016, 2018, 2020, 2022, 2024, 2026, 2028, 2030],
-    band: 3.5
+    ticks: [2016, 2018, 2020, 2022, 2024, 2026, 2028, 2030]
   });
 }
 
