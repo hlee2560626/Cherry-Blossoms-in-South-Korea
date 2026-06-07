@@ -462,12 +462,6 @@ h1 {
   font-weight: 750;
 }
 
-.legend-label {
-  fill: #5d5158;
-  font-size: 12px;
-  font-weight: 750;
-}
-
 .story-band,
 .trend-section,
 .stage-section {
@@ -969,22 +963,6 @@ h1 {
 .trend-card p {
   color: var(--muted);
   line-height: 1.62;
-}
-
-.trend-note {
-  max-width: 1180px;
-  margin: 14px auto 0;
-  padding: 16px 18px;
-  border: 1px solid rgba(111, 159, 130, 0.25);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.66);
-  color: var(--muted);
-  font-size: 0.96rem;
-  line-height: 1.68;
-}
-
-.trend-note strong {
-  color: var(--ink);
 }
 
 .evidence-section {
