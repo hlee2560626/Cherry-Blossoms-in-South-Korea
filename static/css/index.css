@@ -745,6 +745,11 @@ h1 {
   margin: 0 auto;
 }
 
+.text-only-section {
+  display: block;
+  max-width: 980px;
+}
+
 .signal-list {
   display: grid;
   gap: 14px;
@@ -922,6 +927,10 @@ h1 {
   padding: 18px;
   border-radius: 18px;
   background: #fff;
+}
+
+.evidence-visual {
+  aspect-ratio: 16 / 10;
 }
 
 .followup-visual {

@@ -90,28 +90,6 @@
       </div>
     </section>
 
-    <section class="insight-section" id="insights" aria-labelledby="insight-title">
-      <div class="section-head">
-        <div>
-          <div class="section-kicker">Data Diagnostics</div>
-          <h2 id="insight-title">A quick diagnostic that makes the bloom wave easier to read.</h2>
-        </div>
-        <p class="narrative-text">
-          The original charts are preserved in the evidence section below. This web-only diagnostic summarizes the regional bloom dates first, so readers can understand the overall timing before inspecting the full chart set.
-        </p>
-      </div>
-      <div class="insight-grid single-card">
-        <article class="analysis-card">
-          <div class="chart-topline">
-            <span>Bloom dates by count</span>
-            <strong>Most regions: Mar 26 and Mar 29</strong>
-          </div>
-          <svg id="date-cluster-chart" class="analysis-chart date-cluster-chart" role="img" aria-label="Count of regions flowering on each date"></svg>
-          <p>Instead of reading 23 separate bars, this view shows when blooms clustered. The wave begins in Changwon, then many regions join on March 26 and March 29.</p>
-        </article>
-      </div>
-    </section>
-
     <section class="story-band" id="map" aria-labelledby="map-title">
       <div class="section-head">
         <div>
@@ -190,7 +168,7 @@
       </div>
     </section>
 
-    <section class="split-section" id="temperature" aria-labelledby="temperature-title">
+    <section class="split-section text-only-section" id="temperature" aria-labelledby="temperature-title">
       <div class="split-copy">
         <div class="section-kicker">02 · Temperature Before Flowering</div>
         <h2 id="temperature-title">Temperature helps, but it does not explain bloom timing alone.</h2>
@@ -202,16 +180,6 @@
           <li><span></span> The y-axis shows the observed 2026 flowering date for each region.</li>
           <li><span></span> The key message is that warmth supports bloom timing, but geography and local conditions still create exceptions.</li>
         </ul>
-      </div>
-      <div class="scatter-card">
-        <div class="chart-topline">
-          <span>Figure 3 support</span>
-          <strong>independent regions, no connecting line</strong>
-        </div>
-        <div class="figure-interpretation followup-visual">
-          <svg class="temperature-bar-chart compact" role="img" aria-label="Supplemental bar chart of 21-day pre-bloom ASOS temperature by independent region"></svg>
-        </div>
-        <p class="chart-caption">This support graph keeps each region independent, so readers can compare pre-flowering temperature without reading a connecting line between unrelated locations. The original Figure 3 is preserved in the chart evidence section below.</p>
       </div>
     </section>
 
@@ -265,13 +233,6 @@
           </div>
         </article>
       </div>
-      <div class="figure-interpretation stage-support">
-        <div class="chart-topline">
-          <span>Figure 4 label guide</span>
-          <strong>separated stage markers</strong>
-        </div>
-        <svg id="phenology-strip-chart" class="phenology-strip-chart" role="img" aria-label="Separated Bukchuncheon 2026 budburst, flowering, and full bloom markers"></svg>
-      </div>
     </section>
 
     <section class="trend-section" id="trend" aria-labelledby="trend-title">
@@ -323,6 +284,19 @@
             <span>Legend: pink marks the March bloom wave; blue marks regions that flowered in April.</span>
           </figcaption>
         </figure>
+        <figure>
+          <div class="figure-interpretation evidence-visual">
+            <div class="chart-topline">
+              <span>Figure 1 support</span>
+              <strong>bloom dates by count</strong>
+            </div>
+            <svg id="date-cluster-chart" class="analysis-chart date-cluster-chart" role="img" aria-label="Count of regions flowering on each date"></svg>
+          </div>
+          <figcaption>
+            <strong>Figure 1 support · Bloom date clusters</strong>
+            <span>This web-only diagnostic summarizes when the 2026 bloom wave clustered before readers inspect the full regional chart.</span>
+          </figcaption>
+        </figure>
         <figure class="figure-wide">
           <img src="./static/images/Picture2.png" alt="Difference between 2026 flowering dates and long-term normal dates">
           <figcaption>
@@ -338,10 +312,36 @@
           </figcaption>
         </figure>
         <figure>
+          <div class="figure-interpretation evidence-visual">
+            <div class="chart-topline">
+              <span>Figure 3 support</span>
+              <strong>independent regions, no connecting line</strong>
+            </div>
+            <svg class="temperature-bar-chart compact" role="img" aria-label="Supplemental bar chart of 21-day pre-bloom ASOS temperature by independent region"></svg>
+          </div>
+          <figcaption>
+            <strong>Figure 3 support · Independent station comparison</strong>
+            <span>This support graph keeps each region independent, avoiding a connecting line between unrelated locations.</span>
+          </figcaption>
+        </figure>
+        <figure>
           <img src="./static/images/Picture3.png" alt="Temperature build-up before flowering in Bukchuncheon, 2026">
           <figcaption>
             <strong>Figure 4 · Bukchuncheon temperature build-up</strong>
             <span>Daily temperature and the 7-day rolling average show the warming pattern before budburst, flowering, and full bloom.</span>
+          </figcaption>
+        </figure>
+        <figure>
+          <div class="figure-interpretation evidence-visual">
+            <div class="chart-topline">
+              <span>Figure 4 label guide</span>
+              <strong>separated stage markers</strong>
+            </div>
+            <svg id="phenology-strip-chart" class="phenology-strip-chart" role="img" aria-label="Separated Bukchuncheon 2026 budburst, flowering, and full bloom markers"></svg>
+          </div>
+          <figcaption>
+            <strong>Figure 4 support · Non-overlapping stage labels</strong>
+            <span>The same stage dates are separated into milestone labels so budburst, flowering, and full bloom are easier to read.</span>
           </figcaption>
         </figure>
       </div>
