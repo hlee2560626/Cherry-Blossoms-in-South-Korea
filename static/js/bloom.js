@@ -58,6 +58,30 @@ const mapPositions = {
   Baengnyeongdo: { x: 172, y: 82 }
 };
 
+const nationalTrendData = [
+  { year: 1973, day: 26 }, { year: 1974, day: 25 }, { year: 1975, day: 25 }, { year: 1976, day: 24 },
+  { year: 1977, day: 25 }, { year: 1978, day: 23 }, { year: 1979, day: 25 }, { year: 1980, day: 22 },
+  { year: 1981, day: 26 }, { year: 1982, day: 24 }, { year: 1983, day: 25 }, { year: 1984, day: 31 },
+  { year: 1985, day: 26 }, { year: 1986, day: 25 }, { year: 1987, day: 26 }, { year: 1988, day: 30 },
+  { year: 1989, day: 21 }, { year: 1990, day: 18 }, { year: 1991, day: 25 }, { year: 1992, day: 19 },
+  { year: 1993, day: 25 }, { year: 1994, day: 24 }, { year: 1995, day: 25 }, { year: 1996, day: 33 },
+  { year: 1997, day: 21 }, { year: 1998, day: 18 }, { year: 1999, day: 23 }, { year: 2000, day: 25 },
+  { year: 2001, day: 22 }, { year: 2002, day: 13 }, { year: 2003, day: 21 }, { year: 2004, day: 18 },
+  { year: 2005, day: 25 }, { year: 2006, day: 23 }, { year: 2007, day: 19 }, { year: 2008, day: 24 },
+  { year: 2009, day: 16 }, { year: 2010, day: 24 }, { year: 2011, day: 26 }, { year: 2012, day: 29 },
+  { year: 2013, day: 23 }, { year: 2014, day: 15 }, { year: 2015, day: 17 }, { year: 2016, day: 17 },
+  { year: 2017, day: 18 }, { year: 2018, day: 15 }, { year: 2019, day: 13 }, { year: 2020, day: 12 },
+  { year: 2021, day: 8 }, { year: 2022, day: 17 }, { year: 2023, day: 8 }, { year: 2024, day: 15 },
+  { year: 2025, day: 16 }, { year: 2026, day: 15 }
+];
+
+const bukchuncheonTrendData = [
+  { year: 2017, day: 26 }, { year: 2018, day: 21 }, { year: 2019, day: 22 },
+  { year: 2020, day: 18 }, { year: 2021, day: 17 }, { year: 2022, day: 26 },
+  { year: 2023, day: 17 }, { year: 2024, day: 20 }, { year: 2025, day: 24 },
+  { year: 2026, day: 22 }
+];
+
 function normalText(value) {
   if (value === null || Number.isNaN(value)) return "normal not listed";
   if (value < 0) return `${Math.abs(value)} days earlier`;
@@ -223,6 +247,108 @@ function drawTemperatureChart() {
   note.setAttribute("class", "chart-note");
   note.textContent = "No line connects regions; dots compare separate stations.";
   svg.appendChild(note);
+  });
+}
+
+function drawTemperatureBarCharts() {
+  const charts = document.querySelectorAll(".temperature-bar-chart");
+  if (!charts.length) return;
+
+  charts.forEach((svg) => {
+    const compact = svg.classList.contains("compact");
+    const width = 820;
+    const height = compact ? 360 : 520;
+    const margin = { top: 30, right: 96, bottom: 56, left: compact ? 132 : 150 };
+    const selectedRegions = new Set(["Seogwipo", "Jeju", "Busan", "Gwangju", "Changwon", "Seoul", "Bukchuncheon", "Baengnyeongdo", "Mokpo", "Jeonju", "Incheon", "Heuksando"]);
+    const data = bloomData
+      .filter((entry) => !compact || selectedRegions.has(entry.region))
+      .sort((a, b) => b.temp - a.temp);
+    const innerW = width - margin.left - margin.right;
+    const innerH = height - margin.top - margin.bottom;
+    const rowH = innerH / data.length;
+    const xMin = 7;
+    const xMax = 14;
+    const x = (value) => margin.left + ((value - xMin) / (xMax - xMin)) * innerW;
+
+    svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+    svg.innerHTML = "";
+
+    [8, 10, 12, 14].forEach((tick) => {
+      const gx = x(tick);
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute("x1", gx);
+      line.setAttribute("x2", gx);
+      line.setAttribute("y1", margin.top - 6);
+      line.setAttribute("y2", height - margin.bottom + 8);
+      line.setAttribute("stroke", "rgba(89, 73, 84, 0.11)");
+      svg.appendChild(line);
+
+      const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      label.setAttribute("x", gx);
+      label.setAttribute("y", height - 22);
+      label.setAttribute("text-anchor", "middle");
+      label.setAttribute("class", "tick-label");
+      label.textContent = `${tick}C`;
+      svg.appendChild(label);
+    });
+
+    data.forEach((entry, index) => {
+      const y = margin.top + index * rowH + rowH * 0.18;
+      const barH = Math.max(8, rowH * 0.54);
+      const color = entry.day <= 6 ? "#e85d8d" : "#8eb8dd";
+
+      const name = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      name.setAttribute("x", margin.left - 12);
+      name.setAttribute("y", y + barH * 0.72);
+      name.setAttribute("text-anchor", "end");
+      name.setAttribute("class", "tick-label");
+      name.textContent = entry.region;
+      svg.appendChild(name);
+
+      const bg = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      bg.setAttribute("x1", margin.left);
+      bg.setAttribute("x2", width - margin.right);
+      bg.setAttribute("y1", y + barH / 2);
+      bg.setAttribute("y2", y + barH / 2);
+      bg.setAttribute("stroke", "rgba(89, 73, 84, 0.08)");
+      bg.setAttribute("stroke-width", barH);
+      bg.setAttribute("stroke-linecap", "round");
+      svg.appendChild(bg);
+
+      const bar = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      bar.setAttribute("x1", margin.left);
+      bar.setAttribute("x2", x(entry.temp));
+      bar.setAttribute("y1", y + barH / 2);
+      bar.setAttribute("y2", y + barH / 2);
+      bar.setAttribute("stroke", color);
+      bar.setAttribute("stroke-width", barH);
+      bar.setAttribute("stroke-linecap", "round");
+      bar.setAttribute("opacity", "0.82");
+      svg.appendChild(bar);
+
+      const value = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      value.setAttribute("x", Math.min(x(entry.temp) + 10, width - margin.right + 4));
+      value.setAttribute("y", y + barH * 0.72);
+      value.setAttribute("class", "chart-note");
+      value.textContent = `${entry.temp.toFixed(1)}C · ${entry.date}`;
+      svg.appendChild(value);
+    });
+
+    const axis = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    axis.setAttribute("x", margin.left + innerW / 2);
+    axis.setAttribute("y", height - 4);
+    axis.setAttribute("text-anchor", "middle");
+    axis.setAttribute("class", "axis-label");
+    axis.textContent = "21-day ASOS average temperature before flowering";
+    svg.appendChild(axis);
+
+    const note = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    note.setAttribute("x", width - margin.right);
+    note.setAttribute("y", 20);
+    note.setAttribute("text-anchor", "end");
+    note.setAttribute("class", "chart-note");
+    note.textContent = "Warmest station is not necessarily earliest bloom.";
+    svg.appendChild(note);
   });
 }
 
@@ -599,6 +725,185 @@ function drawPhenologyStrip() {
   svg.appendChild(caption);
 }
 
+function dayLabel(day) {
+  if (day <= 16) return `Mar ${String(15 + day).padStart(2, "0")}`;
+  return `Apr ${String(day - 16).padStart(2, "0")}`;
+}
+
+function linearFit(data) {
+  const n = data.length;
+  const sumX = data.reduce((sum, point) => sum + point.year, 0);
+  const sumY = data.reduce((sum, point) => sum + point.day, 0);
+  const sumXY = data.reduce((sum, point) => sum + point.year * point.day, 0);
+  const sumXX = data.reduce((sum, point) => sum + point.year * point.year, 0);
+  const slope = ((n * sumXY) - (sumX * sumY)) / ((n * sumXX) - (sumX * sumX));
+  const intercept = (sumY - slope * sumX) / n;
+  return { slope, intercept, predict: (year) => slope * year + intercept };
+}
+
+function drawTrendChart(svg, data, config) {
+  if (!svg) return;
+
+  const width = 980;
+  const height = 520;
+  const margin = { top: 44, right: 40, bottom: 74, left: 96 };
+  const innerW = width - margin.left - margin.right;
+  const innerH = height - margin.top - margin.bottom;
+  const minYear = config.minYear;
+  const maxYear = config.maxYear;
+  const minDay = 0;
+  const maxDay = 35;
+  const x = (year) => margin.left + ((year - minYear) / (maxYear - minYear)) * innerW;
+  const y = (day) => margin.top + (1 - ((day - minDay) / (maxDay - minDay))) * innerH;
+  const fit = linearFit(data);
+  const projectionStart = 2026;
+  const projectedYears = Array.from({ length: maxYear - projectionStart + 1 }, (_, index) => projectionStart + index);
+
+  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  svg.innerHTML = "";
+
+  [0, 5, 10, 15, 20, 25, 30, 35].forEach((day) => {
+    const gy = y(day);
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", margin.left);
+    line.setAttribute("x2", width - margin.right);
+    line.setAttribute("y1", gy);
+    line.setAttribute("y2", gy);
+    line.setAttribute("stroke", "rgba(89, 73, 84, 0.11)");
+    svg.appendChild(line);
+
+    const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    label.setAttribute("x", margin.left - 16);
+    label.setAttribute("y", gy + 4);
+    label.setAttribute("text-anchor", "end");
+    label.setAttribute("class", "tick-label");
+    label.textContent = dayLabel(day);
+    svg.appendChild(label);
+  });
+
+  config.ticks.forEach((year) => {
+    const gx = x(year);
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", gx);
+    line.setAttribute("x2", gx);
+    line.setAttribute("y1", margin.top);
+    line.setAttribute("y2", height - margin.bottom);
+    line.setAttribute("stroke", "rgba(89, 73, 84, 0.09)");
+    svg.appendChild(line);
+
+    const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    label.setAttribute("x", gx);
+    label.setAttribute("y", height - 34);
+    label.setAttribute("text-anchor", "middle");
+    label.setAttribute("class", "tick-label");
+    label.textContent = year;
+    svg.appendChild(label);
+  });
+
+  const uncertainty = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  const uncertaintyTop = projectedYears.map((year) => `${x(year)},${y(fit.predict(year) + config.band)}`).join(" ");
+  const uncertaintyBottom = projectedYears.slice().reverse().map((year) => `${x(year)},${y(fit.predict(year) - config.band)}`).join(" ");
+  uncertainty.setAttribute("d", `M ${uncertaintyTop} L ${uncertaintyBottom} Z`);
+  uncertainty.setAttribute("fill", "rgba(142, 184, 221, 0.18)");
+  svg.appendChild(uncertainty);
+
+  const observedPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  observedPath.setAttribute("d", data.map((point, index) => `${index ? "L" : "M"} ${x(point.year)} ${y(point.day)}`).join(" "));
+  observedPath.setAttribute("fill", "none");
+  observedPath.setAttribute("stroke", "#8eb8dd");
+  observedPath.setAttribute("stroke-width", "3");
+  observedPath.setAttribute("stroke-linejoin", "round");
+  svg.appendChild(observedPath);
+
+  data.forEach((point) => {
+    const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    dot.setAttribute("cx", x(point.year));
+    dot.setAttribute("cy", y(point.day));
+    dot.setAttribute("r", "4.5");
+    dot.setAttribute("fill", "#3f9bc9");
+    dot.setAttribute("stroke", "#fff");
+    dot.setAttribute("stroke-width", "2");
+    svg.appendChild(dot);
+  });
+
+  const trend = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  trend.setAttribute("x1", x(data[0].year));
+  trend.setAttribute("x2", x(projectionStart));
+  trend.setAttribute("y1", y(fit.predict(data[0].year)));
+  trend.setAttribute("y2", y(fit.predict(projectionStart)));
+  trend.setAttribute("stroke", "#e85d8d");
+  trend.setAttribute("stroke-width", "4");
+  svg.appendChild(trend);
+
+  const projected = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  projected.setAttribute("x1", x(projectionStart));
+  projected.setAttribute("x2", x(maxYear));
+  projected.setAttribute("y1", y(fit.predict(projectionStart)));
+  projected.setAttribute("y2", y(fit.predict(maxYear)));
+  projected.setAttribute("stroke", "#6f9f82");
+  projected.setAttribute("stroke-width", "4");
+  projected.setAttribute("stroke-dasharray", "10 8");
+  svg.appendChild(projected);
+
+  const divider = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  divider.setAttribute("x1", x(projectionStart));
+  divider.setAttribute("x2", x(projectionStart));
+  divider.setAttribute("y1", margin.top);
+  divider.setAttribute("y2", height - margin.bottom);
+  divider.setAttribute("stroke", "rgba(39, 27, 36, 0.45)");
+  divider.setAttribute("stroke-width", "2");
+  divider.setAttribute("stroke-dasharray", "4 5");
+  svg.appendChild(divider);
+
+  const title = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  title.setAttribute("x", margin.left);
+  title.setAttribute("y", 24);
+  title.setAttribute("class", "bar-label");
+  title.textContent = config.title;
+  svg.appendChild(title);
+
+  const yAxis = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  yAxis.setAttribute("x", 24);
+  yAxis.setAttribute("y", height / 2);
+  yAxis.setAttribute("text-anchor", "middle");
+  yAxis.setAttribute("transform", `rotate(-90 20 ${height / 2})`);
+  yAxis.setAttribute("class", "axis-label");
+  yAxis.textContent = "Flowering date";
+  svg.appendChild(yAxis);
+
+  const xAxis = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  xAxis.setAttribute("x", width / 2);
+  xAxis.setAttribute("y", height - 4);
+  xAxis.setAttribute("text-anchor", "middle");
+  xAxis.setAttribute("class", "axis-label");
+  xAxis.textContent = "Year";
+  svg.appendChild(xAxis);
+
+  const note = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  note.setAttribute("x", x(projectionStart) + 12);
+  note.setAttribute("y", margin.top + 18);
+  note.setAttribute("class", "chart-note");
+  note.textContent = "Projection starts";
+  svg.appendChild(note);
+}
+
+function drawTrendCharts() {
+  drawTrendChart(document.querySelector("#national-trend-chart"), nationalTrendData, {
+    title: "Cherry blossoms are blooming earlier over time in Korea",
+    minYear: 1970,
+    maxYear: 2035,
+    ticks: [1970, 1980, 1990, 2000, 2010, 2020, 2026, 2030, 2035],
+    band: 4.5
+  });
+  drawTrendChart(document.querySelector("#bukchuncheon-trend-chart"), bukchuncheonTrendData, {
+    title: "Bukchuncheon varies year to year, but the trend still points earlier",
+    minYear: 2016,
+    maxYear: 2030,
+    ticks: [2016, 2018, 2020, 2022, 2024, 2026, 2028, 2030],
+    band: 3.5
+  });
+}
+
 function drawPetals() {
   const canvas = document.querySelector("#petal-field");
   const ctx = canvas.getContext("2d");
@@ -661,9 +966,11 @@ function updateScrollMeter() {
 drawTimeline();
 drawKoreaHeatmap();
 drawTemperatureChart();
+drawTemperatureBarCharts();
 drawDateClusterChart();
 drawNormalShiftChart();
 drawPhenologyStrip();
+drawTrendCharts();
 drawPetals();
 updateScrollMeter();
 window.addEventListener("scroll", updateScrollMeter, { passive: true });
