@@ -203,20 +203,21 @@
         <div class="section-kicker">02 · Temperature Before Flowering</div>
         <h2 id="temperature-title">Temperature helps, but it does not explain bloom timing alone.</h2>
         <p class="narrative-text">
-          ASOS stands for Automated Synoptic Observing System: Korea Meteorological Administration weather stations that record observations such as temperature, precipitation, sunshine, and radiation at regular intervals. Instead of connecting independent cities with a line, this redesign compares each station as its own bar.
+          ASOS stands for Automated Synoptic Observing System: Korea Meteorological Administration weather stations that record observations such as temperature, precipitation, sunshine, and radiation at regular intervals. Figure 3 uses those station-level temperatures to compare pre-flowering warmth with the observed 2026 flowering date.
         </p>
         <ul class="signal-list">
-          <li><span></span> Bars show 21-day average temperature before flowering.</li>
-          <li><span></span> Labels show the observed 2026 flowering date for each region.</li>
+          <li><span></span> The x-axis shows average temperature before flowering.</li>
+          <li><span></span> The y-axis shows the observed 2026 flowering date for each region.</li>
           <li><span></span> The key message is that warmth supports bloom timing, but geography and local conditions still create exceptions.</li>
         </ul>
       </div>
-        <div class="scatter-card">
+      <div class="scatter-card">
         <div class="chart-topline">
-          <span>Figure 3 redesign</span>
-          <strong>independent regions, no connecting line</strong>
+          <span>Figure 3</span>
+          <strong>temperature and flowering date</strong>
         </div>
-        <svg class="temperature-bar-chart" role="img" aria-label="Bar chart comparing 21-day pre-bloom ASOS temperature by region"></svg>
+        <img class="analysis-image" src="./static/images/figure3_warmer_regions_original.svg" alt="Warmer regions generally bloom earlier in 2026">
+        <p class="chart-caption">This team figure places average pre-flowering temperature on the x-axis and the 2026 flowering date on the y-axis to show the broad relationship between warmth and bloom timing.</p>
       </div>
     </section>
 
@@ -270,6 +271,13 @@
           </div>
         </article>
       </div>
+      <figure class="wide-figure-card">
+        <img src="./static/images/Picture3.png" alt="Temperature build-up before flowering in Bukchuncheon, 2026">
+        <figcaption>
+          <strong>Figure 4 · Temperature build-up before flowering: Bukchuncheon, 2026</strong>
+          <span>The original time-series view shows daily mean temperature, the 7-day rolling average, and the timing of budburst, flowering, and full bloom.</span>
+        </figcaption>
+      </figure>
     </section>
 
     <section class="trend-section" id="trend" aria-labelledby="trend-title">
@@ -279,25 +287,28 @@
           <h2 id="trend-title">Korea's average flowering date is drifting earlier.</h2>
         </div>
         <p class="narrative-text">
-          Historical data varies year to year, yet the national trend moves steadily toward earlier spring flowering. The projection is a simple continuation of the observed linear trend, so it should be read as a directional scenario rather than an exact forecast.
+          Historical data varies year to year, yet the national trend moves steadily toward earlier spring flowering. The projection window follows the final Figure 5 and 6 method: a simple linear continuation with a widening uncertainty range.
         </p>
       </div>
       <div class="trend-grid">
         <article class="trend-card large">
           <svg id="national-trend-chart" class="trend-svg" role="img" aria-label="Standardized national average cherry blossom flowering trend chart"></svg>
           <div>
-            <h3>Figure 5 · National trend</h3>
-            <p>The historical average advances over time, and the projection continues that earlier flowering direction.</p>
+            <h3>Figure 5 · Long-term trend across Korea</h3>
+            <p>Although flowering dates fluctuate from year to year, the historical linear trend indicates that cherry blossoms have generally bloomed earlier over time. The projected continuation suggests this shift may persist through 2035.</p>
           </div>
         </article>
         <article class="trend-card">
           <svg id="bukchuncheon-trend-chart" class="trend-svg" role="img" aria-label="Standardized Bukchuncheon flowering trend chart with complete x-axis labels"></svg>
           <div>
-            <h3>Figure 6 · Bukchuncheon variability</h3>
-            <p>Local conditions create larger year-to-year swings; all x-axis labels are redrawn here for readability.</p>
+            <h3>Figure 6 · Local variability in Bukchuncheon</h3>
+            <p>Bukchuncheon shows substantial year-to-year variation compared with the national view. The trend points earlier, but the observed swings show how annual weather and regional conditions still shape local flowering.</p>
           </div>
         </article>
       </div>
+      <p class="trend-note narrative-text">
+        <strong>Projection note.</strong> The projections in Figures 5 and 6 rely on simple linear trends and should be interpreted with caution. Actual flowering dates may deviate from these scenarios because of annual weather fluctuations, local environmental conditions, and other unmodeled factors.
+      </p>
     </section>
 
     <section class="evidence-section" id="evidence" aria-labelledby="evidence-title">
@@ -326,29 +337,17 @@
           </figcaption>
         </figure>
         <figure>
-          <div class="figure-interpretation">
-            <div class="chart-topline">
-              <span>Reinterpreted Figure 3</span>
-              <strong>bar chart, no mean line</strong>
-            </div>
-            <svg class="temperature-bar-chart compact" role="img" aria-label="Reinterpreted bar chart of 21-day pre-bloom ASOS temperature"></svg>
-          </div>
+          <img src="./static/images/figure3_warmer_regions_original.svg" alt="Warmer regions generally bloom earlier in 2026">
           <figcaption>
-            <strong>Figure 3 · Reinterpreted ASOS temperature lens</strong>
-            <span>Independent stations are compared with bars because category order should not create a false line pattern.</span>
+            <strong>Figure 3 · Temperature and flowering relationship</strong>
+            <span>Average pre-flowering temperature is compared with the observed 2026 cherry blossom date.</span>
           </figcaption>
         </figure>
         <figure>
-          <div class="figure-interpretation">
-            <div class="chart-topline">
-              <span>Cleaned Figure 4</span>
-              <strong>stage labels separated</strong>
-            </div>
-            <svg id="phenology-strip-chart" class="phenology-strip-chart" role="img" aria-label="Simplified Bukchuncheon bloom stages without overlapping labels"></svg>
-          </div>
+          <img src="./static/images/Picture3.png" alt="Temperature build-up before flowering in Bukchuncheon, 2026">
           <figcaption>
-            <strong>Figure 4 · Bukchuncheon bloom stages</strong>
-            <span>The overlapping pink and purple labels are replaced with separated stage cards and a cleaner milestone strip.</span>
+            <strong>Figure 4 · Bukchuncheon temperature build-up</strong>
+            <span>Daily temperature and the 7-day rolling average show the warming pattern before budburst, flowering, and full bloom.</span>
           </figcaption>
         </figure>
       </div>
