@@ -218,22 +218,6 @@
         </div>
         <img class="analysis-image" src="./static/images/Figure3.png" alt="Warmer regions generally bloom earlier in 2026">
         <p class="chart-caption">This team figure places average pre-flowering temperature on the x-axis and the 2026 flowering date on the y-axis to show the broad relationship between warmth and bloom timing.</p>
-        <div class="figure-interpretation followup-visual">
-          <div class="chart-topline">
-            <span>Figure 3 redesign</span>
-            <strong>independent regions, no connecting line</strong>
-          </div>
-          <svg class="temperature-bar-chart compact" role="img" aria-label="Reinterpreted bar chart of 21-day pre-bloom ASOS temperature"></svg>
-        </div>
-        <p class="chart-caption">The redesign below keeps each station independent, making the temperature comparison easier to read without relying on a connecting line between unrelated regions.</p>
-        <div class="figure-interpretation followup-visual">
-          <div class="chart-topline">
-            <span>Supplement view</span>
-            <strong>change from normal</strong>
-          </div>
-          <svg class="analysis-chart normal-shift-chart" role="img" aria-label="Supplemental chart showing regions grouped by earlier or later than normal flowering"></svg>
-        </div>
-        <p class="chart-caption">This additional support graph separates calendar order from normal-year change, so readers can see that Seoul was not the earliest bloom but was the strongest earlier-than-normal signal.</p>
       </div>
     </section>
 
@@ -244,7 +228,7 @@
           <h2 id="stage-title">Reading the bloom as three visible stages.</h2>
         </div>
         <p class="narrative-text">
-          Figure 4 marks three biological checkpoints in the cherry blossom cycle. Bukchuncheon is used as the detailed example because it represents a northern inland station with visible year-to-year variability, while Changwon and Baengnyeongdo provide early and late reference points for comparison.
+          Figure 4 marks three biological checkpoints in the cherry blossom cycle. The detailed example uses Bukchuncheon because the dataset includes budburst, flowering, and full-bloom dates for that station.
         </p>
       </div>
       <div class="term-grid" aria-label="Bloom stage definitions">
@@ -294,6 +278,13 @@
           <span>The original time-series view shows daily mean temperature, the 7-day rolling average, and the timing of budburst, flowering, and full bloom.</span>
         </figcaption>
       </figure>
+      <div class="figure-interpretation stage-support">
+        <div class="chart-topline">
+          <span>Figure 4 label guide</span>
+          <strong>separated stage markers</strong>
+        </div>
+        <svg id="phenology-strip-chart" class="phenology-strip-chart" role="img" aria-label="Separated Bukchuncheon 2026 budburst, flowering, and full bloom markers"></svg>
+      </div>
     </section>
 
     <section class="trend-section" id="trend" aria-labelledby="trend-title">
@@ -357,32 +348,6 @@
           <figcaption>
             <strong>Figure 3 · Temperature and flowering relationship</strong>
             <span>Average pre-flowering temperature is compared with the observed 2026 cherry blossom date.</span>
-          </figcaption>
-        </figure>
-        <figure>
-          <div class="figure-interpretation">
-            <div class="chart-topline">
-              <span>Figure 3 redesign</span>
-              <strong>independent regions, no connecting line</strong>
-            </div>
-            <svg class="temperature-bar-chart compact" role="img" aria-label="Reinterpreted bar chart of 21-day pre-bloom ASOS temperature"></svg>
-          </div>
-          <figcaption>
-            <strong>Figure 3 supplement · Independent station comparison</strong>
-            <span>This supplemental view restores the earlier web-only visualization, comparing stations with bars instead of a connected category line.</span>
-          </figcaption>
-        </figure>
-        <figure>
-          <div class="figure-interpretation">
-            <div class="chart-topline">
-              <span>Figure 3 support</span>
-              <strong>change from normal</strong>
-            </div>
-            <svg class="analysis-chart normal-shift-chart" role="img" aria-label="Supplemental chart showing regions grouped by earlier or later than normal flowering"></svg>
-          </div>
-          <figcaption>
-            <strong>Figure 3 support · Calendar date versus normal shift</strong>
-            <span>This extra view clarifies that earliest bloom and strongest early anomaly are different findings.</span>
           </figcaption>
         </figure>
         <figure>
