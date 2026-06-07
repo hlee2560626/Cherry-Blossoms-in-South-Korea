@@ -959,9 +959,17 @@ h1 {
 .trend-card img,
 .trend-svg {
   width: 100%;
-  height: 560px;
+  object-fit: contain;
   border-radius: 20px;
   background: #fff;
+}
+
+.trend-card img {
+  height: auto;
+}
+
+.trend-svg {
+  height: 560px;
 }
 
 .trend-svg {
