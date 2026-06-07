@@ -428,6 +428,11 @@ h1 {
   margin: 0 auto;
 }
 
+.insight-grid.single-card {
+  grid-template-columns: minmax(0, 820px);
+  justify-content: center;
+}
+
 .analysis-card {
   padding: clamp(18px, 3vw, 28px);
   border: 1px solid rgba(255, 255, 255, 0.78);

@@ -711,10 +711,11 @@ function drawPhenologyStrip() {
   const width = 720;
   const height = 360;
   const margin = { top: 46, right: 54, bottom: 76, left: 54 };
+  const cardW = 148;
   const stages = [
-    { label: "Budburst", date: "Mar 24", day: 0, color: "#6f9f82", y: 170 },
-    { label: "Flowering", date: "Apr 04", day: 11, color: "#e85d8d", y: 122 },
-    { label: "Full bloom", date: "Apr 08", day: 15, color: "#8e75c8", y: 96 }
+    { label: "Budburst", date: "Mar 24", day: 0, color: "#6f9f82", y: 172, labelX: 126 },
+    { label: "Flowering", date: "Apr 04", day: 11, color: "#e85d8d", y: 118, labelX: 350 },
+    { label: "Full bloom", date: "Apr 08", day: 15, color: "#8e75c8", y: 82, labelX: 580 }
   ];
   const x = (day) => margin.left + (day / 22) * (width - margin.left - margin.right);
 
@@ -733,11 +734,11 @@ function drawPhenologyStrip() {
 
   stages.forEach((stage, index) => {
     const gx = x(stage.day);
-    const marker = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    marker.setAttribute("x1", gx);
-    marker.setAttribute("x2", gx);
-    marker.setAttribute("y1", "210");
-    marker.setAttribute("y2", stage.y + 32);
+    const cardX = Math.max(18, Math.min(stage.labelX - cardW / 2, width - cardW - 18));
+    const cardCenter = cardX + cardW / 2;
+    const marker = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    marker.setAttribute("d", `M ${gx} 210 L ${gx} ${stage.y + 36} L ${cardCenter} ${stage.y + 36}`);
+    marker.setAttribute("fill", "none");
     marker.setAttribute("stroke", stage.color);
     marker.setAttribute("stroke-width", "3");
     marker.setAttribute("stroke-dasharray", "6 6");
@@ -753,9 +754,9 @@ function drawPhenologyStrip() {
     svg.appendChild(dot);
 
     const card = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    card.setAttribute("x", Math.max(18, Math.min(gx - 74, width - 166)));
+    card.setAttribute("x", cardX);
     card.setAttribute("y", stage.y - 40);
-    card.setAttribute("width", "148");
+    card.setAttribute("width", cardW);
     card.setAttribute("height", "70");
     card.setAttribute("rx", "18");
     card.setAttribute("fill", "rgba(255,255,255,0.86)");
@@ -764,7 +765,7 @@ function drawPhenologyStrip() {
     svg.appendChild(card);
 
     const title = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    title.setAttribute("x", Math.max(92, Math.min(gx, width - 92)));
+    title.setAttribute("x", cardCenter);
     title.setAttribute("y", stage.y - 12);
     title.setAttribute("text-anchor", "middle");
     title.setAttribute("class", "bar-label");
@@ -772,7 +773,7 @@ function drawPhenologyStrip() {
     svg.appendChild(title);
 
     const date = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    date.setAttribute("x", Math.max(92, Math.min(gx, width - 92)));
+    date.setAttribute("x", cardCenter);
     date.setAttribute("y", stage.y + 10);
     date.setAttribute("text-anchor", "middle");
     date.setAttribute("class", "chart-note");
