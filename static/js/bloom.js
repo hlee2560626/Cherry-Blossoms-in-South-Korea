@@ -518,8 +518,8 @@ function drawKoreaHeatmap() {
 }
 
 function drawDateClusterChart() {
-  const svg = document.querySelector("#date-cluster-chart");
-  if (!svg) return;
+  const charts = document.querySelectorAll(".date-cluster-chart, #date-cluster-chart");
+  if (!charts.length) return;
 
   const width = 720;
   const height = 340;
@@ -537,53 +537,55 @@ function drawDateClusterChart() {
   const step = innerW / counts.length;
   const barW = Math.min(46, step * 0.62);
 
-  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
-  svg.innerHTML = "";
+  charts.forEach((svg) => {
+    svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+    svg.innerHTML = "";
 
-  counts.forEach((entry, index) => {
-    const x = margin.left + index * step + (step - barW) / 2;
-    const barH = (entry.count / maxCount) * innerH;
-    const y = margin.top + innerH - barH;
-    const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    rect.setAttribute("x", x);
-    rect.setAttribute("y", y);
-    rect.setAttribute("width", barW);
-    rect.setAttribute("height", barH);
-    rect.setAttribute("rx", "12");
-    rect.setAttribute("fill", entry.day <= 5 ? "#e85d8d" : "#8eb8dd");
-    rect.setAttribute("opacity", "0.82");
-    svg.appendChild(rect);
+    counts.forEach((entry, index) => {
+      const x = margin.left + index * step + (step - barW) / 2;
+      const barH = (entry.count / maxCount) * innerH;
+      const y = margin.top + innerH - barH;
+      const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      rect.setAttribute("x", x);
+      rect.setAttribute("y", y);
+      rect.setAttribute("width", barW);
+      rect.setAttribute("height", barH);
+      rect.setAttribute("rx", "12");
+      rect.setAttribute("fill", entry.day <= 5 ? "#e85d8d" : "#8eb8dd");
+      rect.setAttribute("opacity", "0.82");
+      svg.appendChild(rect);
 
-    const value = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    value.setAttribute("x", x + barW / 2);
-    value.setAttribute("y", y - 10);
-    value.setAttribute("text-anchor", "middle");
-    value.setAttribute("class", "bar-label");
-    value.textContent = entry.count;
-    svg.appendChild(value);
+      const value = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      value.setAttribute("x", x + barW / 2);
+      value.setAttribute("y", y - 10);
+      value.setAttribute("text-anchor", "middle");
+      value.setAttribute("class", "bar-label");
+      value.textContent = entry.count;
+      svg.appendChild(value);
 
-    const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    label.setAttribute("x", x + barW / 2);
-    label.setAttribute("y", height - 24);
-    label.setAttribute("text-anchor", "middle");
-    label.setAttribute("class", "tick-label");
-    label.textContent = entry.date.replace(" ", "\u00a0");
-    svg.appendChild(label);
+      const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      label.setAttribute("x", x + barW / 2);
+      label.setAttribute("y", height - 24);
+      label.setAttribute("text-anchor", "middle");
+      label.setAttribute("class", "tick-label");
+      label.textContent = entry.date.replace(" ", "\u00a0");
+      svg.appendChild(label);
+    });
+
+    const axis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    axis.setAttribute("x1", margin.left);
+    axis.setAttribute("x2", width - margin.right);
+    axis.setAttribute("y1", margin.top + innerH);
+    axis.setAttribute("y2", margin.top + innerH);
+    axis.setAttribute("stroke", "rgba(89, 73, 84, 0.18)");
+    axis.setAttribute("stroke-width", "2");
+    svg.appendChild(axis);
   });
-
-  const axis = document.createElementNS("http://www.w3.org/2000/svg", "line");
-  axis.setAttribute("x1", margin.left);
-  axis.setAttribute("x2", width - margin.right);
-  axis.setAttribute("y1", margin.top + innerH);
-  axis.setAttribute("y2", margin.top + innerH);
-  axis.setAttribute("stroke", "rgba(89, 73, 84, 0.18)");
-  axis.setAttribute("stroke-width", "2");
-  svg.appendChild(axis);
 }
 
 function drawNormalShiftChart() {
-  const svg = document.querySelector("#normal-shift-chart");
-  if (!svg) return;
+  const charts = document.querySelectorAll(".normal-shift-chart, #normal-shift-chart");
+  if (!charts.length) return;
 
   const listed = bloomData.filter((entry) => entry.normal !== null);
   const early = listed.filter((entry) => entry.normal < 0).length;
@@ -598,8 +600,9 @@ function drawNormalShiftChart() {
   const leftW = early * scale;
   const rightW = late * scale;
 
-  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
-  svg.innerHTML = "";
+  charts.forEach((svg) => {
+    svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+    svg.innerHTML = "";
 
   const base = document.createElementNS("http://www.w3.org/2000/svg", "line");
   base.setAttribute("x1", center - 280);
@@ -670,33 +673,34 @@ function drawNormalShiftChart() {
     { x: center + rightW, y: 264, text: "Seogwipo: 9 days late", color: "#8eb8dd" }
   ];
 
-  callouts.forEach((callout) => {
-    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    circle.setAttribute("cx", callout.x);
-    circle.setAttribute("cy", y);
-    circle.setAttribute("r", "8");
-    circle.setAttribute("fill", callout.color);
-    circle.setAttribute("stroke", "#fff");
-    circle.setAttribute("stroke-width", "3");
-    svg.appendChild(circle);
+    callouts.forEach((callout) => {
+      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      circle.setAttribute("cx", callout.x);
+      circle.setAttribute("cy", y);
+      circle.setAttribute("r", "8");
+      circle.setAttribute("fill", callout.color);
+      circle.setAttribute("stroke", "#fff");
+      circle.setAttribute("stroke-width", "3");
+      svg.appendChild(circle);
 
-    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    line.setAttribute("x1", callout.x);
-    line.setAttribute("x2", callout.x);
-    line.setAttribute("y1", y + 14);
-    line.setAttribute("y2", callout.y - 20);
-    line.setAttribute("stroke", callout.color);
-    line.setAttribute("stroke-width", "2");
-    line.setAttribute("stroke-dasharray", "5 5");
-    svg.appendChild(line);
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute("x1", callout.x);
+      line.setAttribute("x2", callout.x);
+      line.setAttribute("y1", y + 14);
+      line.setAttribute("y2", callout.y - 20);
+      line.setAttribute("stroke", callout.color);
+      line.setAttribute("stroke-width", "2");
+      line.setAttribute("stroke-dasharray", "5 5");
+      svg.appendChild(line);
 
-    const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-    text.setAttribute("x", callout.x);
-    text.setAttribute("y", callout.y);
-    text.setAttribute("text-anchor", "middle");
-    text.setAttribute("class", "bar-label");
-    text.textContent = callout.text;
-    svg.appendChild(text);
+      const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      text.setAttribute("x", callout.x);
+      text.setAttribute("y", callout.y);
+      text.setAttribute("text-anchor", "middle");
+      text.setAttribute("class", "bar-label");
+      text.textContent = callout.text;
+      svg.appendChild(text);
+    });
   });
 }
 

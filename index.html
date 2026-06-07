@@ -106,7 +106,7 @@
             <span>Bloom dates by count</span>
             <strong>Most regions: Mar 26 and Mar 29</strong>
           </div>
-          <svg id="date-cluster-chart" class="analysis-chart" role="img" aria-label="Count of regions flowering on each date"></svg>
+          <svg id="date-cluster-chart" class="analysis-chart date-cluster-chart" role="img" aria-label="Count of regions flowering on each date"></svg>
           <p>Instead of reading 23 separate bars, this view shows when blooms clustered. The wave begins in Changwon, then many regions join on March 26 and March 29.</p>
         </article>
         <article class="analysis-card">
@@ -114,7 +114,7 @@
             <span>Change from normal</span>
             <strong>19 of 22 listed regions were early</strong>
           </div>
-          <svg id="normal-shift-chart" class="analysis-chart" role="img" aria-label="Regions grouped by earlier or later than normal flowering"></svg>
+          <svg id="normal-shift-chart" class="analysis-chart normal-shift-chart" role="img" aria-label="Regions grouped by earlier or later than normal flowering"></svg>
           <p>This fixes the main interpretation issue: Seoul is not the first bloom, but it is the strongest earlier-than-normal signal at 10 days early.</p>
         </article>
       </div>
@@ -226,6 +226,14 @@
           <svg class="temperature-bar-chart compact" role="img" aria-label="Reinterpreted bar chart of 21-day pre-bloom ASOS temperature"></svg>
         </div>
         <p class="chart-caption">The redesign below keeps each station independent, making the temperature comparison easier to read without relying on a connecting line between unrelated regions.</p>
+        <div class="figure-interpretation followup-visual">
+          <div class="chart-topline">
+            <span>Supplement view</span>
+            <strong>change from normal</strong>
+          </div>
+          <svg class="analysis-chart normal-shift-chart" role="img" aria-label="Supplemental chart showing regions grouped by earlier or later than normal flowering"></svg>
+        </div>
+        <p class="chart-caption">This additional support graph separates calendar order from normal-year change, so readers can see that Seoul was not the earliest bloom but was the strongest earlier-than-normal signal.</p>
       </div>
     </section>
 
@@ -362,6 +370,19 @@
           <figcaption>
             <strong>Figure 3 supplement · Independent station comparison</strong>
             <span>This supplemental view restores the earlier web-only visualization, comparing stations with bars instead of a connected category line.</span>
+          </figcaption>
+        </figure>
+        <figure>
+          <div class="figure-interpretation">
+            <div class="chart-topline">
+              <span>Figure 3 support</span>
+              <strong>change from normal</strong>
+            </div>
+            <svg class="analysis-chart normal-shift-chart" role="img" aria-label="Supplemental chart showing regions grouped by earlier or later than normal flowering"></svg>
+          </div>
+          <figcaption>
+            <strong>Figure 3 support · Calendar date versus normal shift</strong>
+            <span>This extra view clarifies that earliest bloom and strongest early anomaly are different findings.</span>
           </figcaption>
         </figure>
         <figure>
