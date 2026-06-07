@@ -22,6 +22,7 @@
       <a href="#temperature">Temperature</a>
       <a href="#stages">Stages</a>
       <a href="#trend">Trend</a>
+      <a href="#evidence">Figures</a>
       <a href="#sources">Sources</a>
     </nav>
   </header>
@@ -80,6 +81,10 @@
           <p>historical trend and projection window in the long-term view</p>
         </article>
       </div>
+      <div class="takeaway-strip" aria-label="Project improvements">
+        <span>Feedback response</span>
+        <p>Charts are enlarged, the regional view now includes a map-style heat layer, and the key findings are separated into short takeaways instead of long paragraphs.</p>
+      </div>
     </section>
 
     <section class="insight-section" id="insights" aria-labelledby="insight-title">
@@ -121,6 +126,31 @@
         <p>
           In 2026, Changwon flowered first on March 24. Seoul did not flower first; it stands out because it was 10 days earlier than its normal flowering date. Select a region to inspect both signals separately.
         </p>
+      </div>
+
+      <div class="map-feature">
+        <article class="geo-heatmap-card">
+          <div class="chart-topline">
+            <span>Geographic bloom heatmap</span>
+            <strong>pink = earlier bloom, blue = later bloom</strong>
+          </div>
+          <svg id="korea-heatmap" class="korea-heatmap" role="img" aria-label="Map-style heatmap of 2026 cherry blossom flowering dates in South Korea"></svg>
+          <div class="map-legend" aria-label="Heatmap color legend">
+            <span><i class="legend-early"></i>Mar 24-Mar 30</span>
+            <span><i class="legend-late"></i>Apr 01-Apr 15</span>
+            <span><i class="legend-ring"></i>selected region</span>
+          </div>
+        </article>
+        <aside class="map-notes">
+          <div class="section-kicker">Why this helps</div>
+          <h3>Regional timing is easier to understand when it has geography.</h3>
+          <p>The previous bar chart sorted regions by date, which was clean but abstract. This map-style view adds spatial context without replacing the more precise timeline below.</p>
+          <ul class="signal-list compact-list">
+            <li><span></span> Southern and coastal stations appear in the first bloom wave.</li>
+            <li><span></span> Island and northern stations extend the bloom window into April.</li>
+            <li><span></span> Click a point or timeline row to keep the same selected-region summary.</li>
+          </ul>
+        </aside>
       </div>
 
       <div class="bloom-dashboard">
@@ -178,10 +208,10 @@
           <li><span></span> This avoids connecting unrelated regions with a line and makes exceptions easier to spot.</li>
         </ul>
       </div>
-      <div class="scatter-card">
+        <div class="scatter-card">
         <div class="chart-topline">
           <span>21-day average before flowering</span>
-          <strong>left = earlier bloom</strong>
+          <strong>each dot is one region</strong>
         </div>
         <svg class="temperature-chart" role="img" aria-label="Scatter plot of flowering timing and 21-day pre-bloom temperature"></svg>
       </div>
@@ -264,13 +294,19 @@
         </p>
       </div>
       <div class="evidence-grid">
-        <figure>
+        <figure class="figure-wide">
           <img src="./static/images/Picture1.png" alt="Flowering dates by region in 2026">
-          <figcaption>Figure 1 · Regional flowering dates in 2026</figcaption>
+          <figcaption>
+            <strong>Figure 1 · Regional flowering dates in 2026</strong>
+            <span>Legend: pink marks the March bloom wave; blue marks regions that flowered in April.</span>
+          </figcaption>
         </figure>
-        <figure>
+        <figure class="figure-wide">
           <img src="./static/images/Picture2.png" alt="Difference between 2026 flowering dates and long-term normal dates">
-          <figcaption>Figure 2 · Difference from normal flowering dates</figcaption>
+          <figcaption>
+            <strong>Figure 2 · Earlier or later than normal</strong>
+            <span>Negative values mean the 2026 bloom came earlier than the long-term normal date; positive values mean later.</span>
+          </figcaption>
         </figure>
         <figure>
           <div class="figure-interpretation">
@@ -283,8 +319,17 @@
           <figcaption>Figure 3 · Reinterpreted ASOS temperature lens</figcaption>
         </figure>
         <figure>
-          <img src="./static/images/Picture3.png" alt="Temperature build-up before flowering in Bukchuncheon">
-          <figcaption>Figure 4 · Bukchuncheon temperature build-up: budburst, flowering, and full bloom markers</figcaption>
+          <div class="figure-interpretation">
+            <div class="chart-topline">
+              <span>Cleaned Figure 4</span>
+              <strong>stage labels separated</strong>
+            </div>
+            <svg id="phenology-strip-chart" class="phenology-strip-chart" role="img" aria-label="Simplified Bukchuncheon bloom stages without overlapping labels"></svg>
+          </div>
+          <figcaption>
+            <strong>Figure 4 · Bukchuncheon bloom stages</strong>
+            <span>The overlapping pink and purple labels are replaced with separated stage cards and a cleaner milestone strip.</span>
+          </figcaption>
         </figure>
       </div>
     </section>

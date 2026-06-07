@@ -32,6 +32,32 @@ const selectedRank = document.querySelector("#selected-rank");
 const selectedNote = document.querySelector("#selected-note");
 const scrollMeter = document.querySelector(".scroll-meter span");
 
+const mapPositions = {
+  Seoul: { x: 318, y: 150 },
+  Incheon: { x: 284, y: 152 },
+  Suwon: { x: 309, y: 182 },
+  Hongseong: { x: 278, y: 230 },
+  Cheongju: { x: 330, y: 236 },
+  Daejeon: { x: 335, y: 278 },
+  Jeonju: { x: 315, y: 336 },
+  Gwangju: { x: 292, y: 392 },
+  Mokpo: { x: 254, y: 424 },
+  Yeosu: { x: 356, y: 418 },
+  Daegu: { x: 430, y: 342 },
+  Andong: { x: 418, y: 282 },
+  Pohang: { x: 494, y: 330 },
+  Ulsan: { x: 488, y: 390 },
+  Busan: { x: 466, y: 424 },
+  Changwon: { x: 430, y: 414 },
+  Bukchuncheon: { x: 340, y: 92 },
+  Bukgangneung: { x: 444, y: 110 },
+  Ulleungdo: { x: 568, y: 160 },
+  Jeju: { x: 230, y: 522 },
+  Seogwipo: { x: 246, y: 548 },
+  Heuksando: { x: 150, y: 390 },
+  Baengnyeongdo: { x: 172, y: 82 }
+};
+
 function normalText(value) {
   if (value === null || Number.isNaN(value)) return "normal not listed";
   if (value < 0) return `${Math.abs(value)} days earlier`;
@@ -56,6 +82,11 @@ function setSelected(region) {
 
   document.querySelectorAll(".region-row").forEach((row) => {
     row.classList.toggle("is-active", row.dataset.region === item.region);
+  });
+  document.querySelectorAll(".map-point").forEach((point) => {
+    point.classList.toggle("is-active", point.dataset.region === item.region);
+    point.setAttribute("stroke-width", point.dataset.region === item.region ? "5" : "2.5");
+    point.setAttribute("r", point.dataset.region === item.region ? "11" : "8");
   });
 }
 
@@ -137,16 +168,6 @@ function drawTemperatureChart() {
   }
   svg.appendChild(grid);
 
-  const guide = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  guide.setAttribute("d", `M ${x(0)} ${y(9.3)} C ${x(6)} ${y(8.2)}, ${x(12)} ${y(9.8)}, ${x(22)} ${y(8.6)}`);
-  guide.setAttribute("stroke", "url(#warmLine)");
-  guide.setAttribute("stroke-width", "4");
-  guide.setAttribute("stroke-dasharray", "10 10");
-  guide.setAttribute("stroke-linecap", "round");
-  guide.setAttribute("fill", "none");
-  guide.setAttribute("opacity", "0.48");
-  svg.appendChild(guide);
-
   bloomData.forEach((entry) => {
     const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
     group.setAttribute("tabindex", "0");
@@ -194,7 +215,112 @@ function drawTemperatureChart() {
   yLabel.setAttribute("class", "axis-label");
   yLabel.textContent = "21-day ASOS avg. temp";
   svg.appendChild(yLabel);
+
+  const note = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  note.setAttribute("x", width - margin.right);
+  note.setAttribute("y", margin.top + 14);
+  note.setAttribute("text-anchor", "end");
+  note.setAttribute("class", "chart-note");
+  note.textContent = "No line connects regions; dots compare separate stations.";
+  svg.appendChild(note);
   });
+}
+
+function drawKoreaHeatmap() {
+  const svg = document.querySelector("#korea-heatmap");
+  if (!svg) return;
+
+  const width = 720;
+  const height = 610;
+  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  svg.innerHTML = "";
+
+  const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+  defs.innerHTML = `
+    <radialGradient id="mapGlowEarly" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e85d8d" stop-opacity="0.46"/>
+      <stop offset="100%" stop-color="#e85d8d" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="mapGlowLate" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#8eb8dd" stop-opacity="0.42"/>
+      <stop offset="100%" stop-color="#8eb8dd" stop-opacity="0"/>
+    </radialGradient>
+  `;
+  svg.appendChild(defs);
+
+  const land = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  land.setAttribute("d", "M344 42 C430 60 493 108 520 178 C550 258 520 316 498 380 C474 454 416 500 342 514 C274 528 220 492 198 436 C176 382 202 335 196 280 C190 220 228 184 238 134 C247 84 286 34 344 42 Z");
+  land.setAttribute("fill", "rgba(255,255,255,0.72)");
+  land.setAttribute("stroke", "rgba(184,50,102,0.18)");
+  land.setAttribute("stroke-width", "3");
+  svg.appendChild(land);
+
+  const jeju = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
+  jeju.setAttribute("cx", "238");
+  jeju.setAttribute("cy", "535");
+  jeju.setAttribute("rx", "58");
+  jeju.setAttribute("ry", "22");
+  jeju.setAttribute("fill", "rgba(255,255,255,0.68)");
+  jeju.setAttribute("stroke", "rgba(184,50,102,0.16)");
+  jeju.setAttribute("stroke-width", "3");
+  svg.appendChild(jeju);
+
+  bloomData.forEach((entry) => {
+    const pos = mapPositions[entry.region];
+    if (!pos) return;
+    const late = entry.day > 7;
+    const glow = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    glow.setAttribute("cx", pos.x);
+    glow.setAttribute("cy", pos.y);
+    glow.setAttribute("r", late ? "42" : "50");
+    glow.setAttribute("fill", late ? "url(#mapGlowLate)" : "url(#mapGlowEarly)");
+    svg.appendChild(glow);
+  });
+
+  bloomData.forEach((entry) => {
+    const pos = mapPositions[entry.region];
+    if (!pos) return;
+    const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    group.setAttribute("role", "button");
+    group.setAttribute("tabindex", "0");
+    group.setAttribute("aria-label", `${entry.region}, ${entry.date}, ${normalText(entry.normal)}`);
+    group.addEventListener("click", () => setSelected(entry.region));
+    group.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        setSelected(entry.region);
+      }
+    });
+
+    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    circle.dataset.region = entry.region;
+    circle.setAttribute("class", "map-point");
+    circle.setAttribute("cx", pos.x);
+    circle.setAttribute("cy", pos.y);
+    circle.setAttribute("r", entry.region === "Changwon" ? "11" : "8");
+    circle.setAttribute("fill", entry.day > 7 ? "#8eb8dd" : "#e85d8d");
+    circle.setAttribute("stroke", entry.region === "Changwon" ? "#b83266" : "#fff");
+    circle.setAttribute("stroke-width", entry.region === "Changwon" ? "5" : "2.5");
+    group.appendChild(circle);
+
+    if (["Changwon", "Seoul", "Bukchuncheon", "Baengnyeongdo", "Seogwipo", "Busan"].includes(entry.region)) {
+      const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      label.setAttribute("x", pos.x + 12);
+      label.setAttribute("y", pos.y - 10);
+      label.setAttribute("class", "map-label");
+      label.textContent = entry.region;
+      group.appendChild(label);
+    }
+
+    svg.appendChild(group);
+  });
+
+  const north = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  north.setAttribute("x", "596");
+  north.setAttribute("y", "62");
+  north.setAttribute("class", "map-note");
+  north.textContent = "schematic map for spatial reading";
+  svg.appendChild(north);
 }
 
 function drawDateClusterChart() {
@@ -380,6 +506,99 @@ function drawNormalShiftChart() {
   });
 }
 
+function drawPhenologyStrip() {
+  const svg = document.querySelector("#phenology-strip-chart");
+  if (!svg) return;
+
+  const width = 720;
+  const height = 360;
+  const margin = { top: 46, right: 54, bottom: 76, left: 54 };
+  const stages = [
+    { label: "Budburst", date: "Mar 24", day: 0, color: "#6f9f82", y: 170 },
+    { label: "Flowering", date: "Apr 04", day: 11, color: "#e85d8d", y: 122 },
+    { label: "Full bloom", date: "Apr 08", day: 15, color: "#8e75c8", y: 96 }
+  ];
+  const x = (day) => margin.left + (day / 22) * (width - margin.left - margin.right);
+
+  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  svg.innerHTML = "";
+
+  const rail = document.createElementNS("http://www.w3.org/2000/svg", "line");
+  rail.setAttribute("x1", margin.left);
+  rail.setAttribute("x2", width - margin.right);
+  rail.setAttribute("y1", "210");
+  rail.setAttribute("y2", "210");
+  rail.setAttribute("stroke", "rgba(89, 73, 84, 0.16)");
+  rail.setAttribute("stroke-width", "16");
+  rail.setAttribute("stroke-linecap", "round");
+  svg.appendChild(rail);
+
+  stages.forEach((stage, index) => {
+    const gx = x(stage.day);
+    const marker = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    marker.setAttribute("x1", gx);
+    marker.setAttribute("x2", gx);
+    marker.setAttribute("y1", "210");
+    marker.setAttribute("y2", stage.y + 32);
+    marker.setAttribute("stroke", stage.color);
+    marker.setAttribute("stroke-width", "3");
+    marker.setAttribute("stroke-dasharray", "6 6");
+    svg.appendChild(marker);
+
+    const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    dot.setAttribute("cx", gx);
+    dot.setAttribute("cy", "210");
+    dot.setAttribute("r", "13");
+    dot.setAttribute("fill", stage.color);
+    dot.setAttribute("stroke", "#fff");
+    dot.setAttribute("stroke-width", "4");
+    svg.appendChild(dot);
+
+    const card = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    card.setAttribute("x", Math.max(18, Math.min(gx - 74, width - 166)));
+    card.setAttribute("y", stage.y - 40);
+    card.setAttribute("width", "148");
+    card.setAttribute("height", "70");
+    card.setAttribute("rx", "18");
+    card.setAttribute("fill", "rgba(255,255,255,0.86)");
+    card.setAttribute("stroke", stage.color);
+    card.setAttribute("stroke-opacity", "0.28");
+    svg.appendChild(card);
+
+    const title = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    title.setAttribute("x", Math.max(92, Math.min(gx, width - 92)));
+    title.setAttribute("y", stage.y - 12);
+    title.setAttribute("text-anchor", "middle");
+    title.setAttribute("class", "bar-label");
+    title.textContent = stage.label;
+    svg.appendChild(title);
+
+    const date = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    date.setAttribute("x", Math.max(92, Math.min(gx, width - 92)));
+    date.setAttribute("y", stage.y + 10);
+    date.setAttribute("text-anchor", "middle");
+    date.setAttribute("class", "chart-note");
+    date.textContent = stage.date;
+    svg.appendChild(date);
+
+    const tick = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    tick.setAttribute("x", gx);
+    tick.setAttribute("y", "250");
+    tick.setAttribute("text-anchor", "middle");
+    tick.setAttribute("class", "tick-label");
+    tick.textContent = stage.date;
+    svg.appendChild(tick);
+  });
+
+  const caption = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  caption.setAttribute("x", width / 2);
+  caption.setAttribute("y", height - 24);
+  caption.setAttribute("text-anchor", "middle");
+  caption.setAttribute("class", "chart-note");
+  caption.textContent = "Bukchuncheon 2026 stages shown as separated milestones to avoid label overlap.";
+  svg.appendChild(caption);
+}
+
 function drawPetals() {
   const canvas = document.querySelector("#petal-field");
   const ctx = canvas.getContext("2d");
@@ -440,9 +659,11 @@ function updateScrollMeter() {
 }
 
 drawTimeline();
+drawKoreaHeatmap();
 drawTemperatureChart();
 drawDateClusterChart();
 drawNormalShiftChart();
+drawPhenologyStrip();
 drawPetals();
 updateScrollMeter();
 window.addEventListener("scroll", updateScrollMeter, { passive: true });
