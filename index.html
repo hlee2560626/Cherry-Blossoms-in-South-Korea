@@ -47,7 +47,7 @@
       <div class="hero-visual" aria-label="Bloom summary visual">
         <div class="orbit-card">
           <div class="orbit-rings" aria-hidden="true"></div>
-          <img src="./static/images/Picture1.png" alt="2026 cherry blossom flowering dates by region">
+          <img src="./static/images/cherry-blossom-sky.png" alt="Cherry blossoms against a spring sky">
           <div class="hero-stat stat-a">
             <strong>Mar 24</strong>
             <span>earliest region</span>
@@ -162,14 +162,6 @@
           <div id="bloom-timeline" class="bloom-timeline" aria-label="Interactive regional flowering dates"></div>
         </div>
       </div>
-      <div class="figure-interpretation bloom-support-visual">
-        <div class="chart-topline">
-          <span>Figure 3 support</span>
-          <strong>independent regions, no connecting line</strong>
-        </div>
-        <svg class="temperature-bar-chart compact" role="img" aria-label="Supplemental bar chart of 21-day pre-bloom ASOS temperature by independent region"></svg>
-        <p class="chart-caption">This support graph keeps each region independent, so readers can compare pre-flowering temperature without reading a connecting line between unrelated locations.</p>
-      </div>
     </section>
 
     <section class="split-section text-only-section" id="temperature" aria-labelledby="temperature-title">
@@ -249,22 +241,6 @@
           Historical data varies year to year, but the overall trend points toward earlier spring flowering. Figures 5 and 6 show this pattern at the national scale and for Bukchuncheon.
         </p>
       </div>
-      <div class="trend-grid">
-        <article class="trend-card large">
-          <img src="./static/images/전국 개화 추세 그래프.png" alt="Cherry blossoms are blooming earlier over time in Korea">
-          <div>
-            <h3>Figure 5 · Long-term trend across Korea</h3>
-            <p>Although flowering dates fluctuate from year to year, the historical linear trend indicates that cherry blossoms have generally bloomed earlier over time. The projected continuation suggests this shift may persist through 2035.</p>
-          </div>
-        </article>
-        <article class="trend-card">
-          <img src="./static/images/북춘천 개화 추세 그래프.png" alt="Local flowering patterns in Bukchuncheon vary from year to year">
-          <div>
-            <h3>Figure 6 · Local variability in Bukchuncheon</h3>
-            <p>Bukchuncheon shows substantial year-to-year variation compared with the national view. The trend points earlier, but the observed swings show how annual weather and regional conditions still shape local flowering.</p>
-          </div>
-        </article>
-      </div>
       <p class="trend-note narrative-text">
         <strong>Projection note.</strong> Figures 5 and 6 use simple linear projections, so the future dates should be read as rough scenarios rather than exact predictions.
       </p>
@@ -309,10 +285,23 @@
           </figcaption>
         </figure>
         <figure>
-          <img src="./static/images/Picture3.png" alt="Temperature build-up before flowering in Bukchuncheon, 2026">
+          <div class="figure-interpretation evidence-visual">
+            <div class="chart-topline">
+              <span>Figure 3 support</span>
+              <strong>independent regions, no connecting line</strong>
+            </div>
+            <svg class="temperature-bar-chart compact" role="img" aria-label="Supplemental bar chart of 21-day pre-bloom ASOS temperature by independent region"></svg>
+          </div>
           <figcaption>
-            <strong>Figure 4 · Bukchuncheon temperature build-up</strong>
-            <span>Daily temperature and the 7-day rolling average show the warming pattern before budburst, flowering, and full bloom.</span>
+            <strong>Figure 3 support · Independent station comparison</strong>
+            <span>This support graph keeps each region independent, avoiding a connecting line between unrelated locations.</span>
+          </figcaption>
+        </figure>
+        <figure class="figure-wide">
+          <img src="./static/images/Figure4.png" alt="Presentation slide explaining temperature build-up before flowering in Bukchuncheon, 2026">
+          <figcaption>
+            <strong>Figure 4 · Temperature build-up before flowering</strong>
+            <span>This presentation-style figure explains the Bukchuncheon temperature build-up and the timing of budburst, flowering, and full bloom.</span>
           </figcaption>
         </figure>
         <figure>
@@ -326,6 +315,20 @@
           <figcaption>
             <strong>Figure 4 support · Non-overlapping stage labels</strong>
             <span>The same stage dates are separated into milestone labels so budburst, flowering, and full bloom are easier to read.</span>
+          </figcaption>
+        </figure>
+        <figure class="figure-wide">
+          <img src="./static/images/전국 개화 추세 그래프.png" alt="Cherry blossoms are blooming earlier over time in Korea">
+          <figcaption>
+            <strong>Figure 5 · Long-term trend across Korea</strong>
+            <span>The national series fluctuates year to year, but the fitted trend points toward earlier flowering over time.</span>
+          </figcaption>
+        </figure>
+        <figure class="figure-wide">
+          <img src="./static/images/북춘천 개화 추세 그래프.png" alt="Local flowering patterns in Bukchuncheon vary from year to year">
+          <figcaption>
+            <strong>Figure 6 · Local variability in Bukchuncheon</strong>
+            <span>Bukchuncheon varies strongly by year, so the projection should be read as a rough trend rather than an exact forecast.</span>
           </figcaption>
         </figure>
       </div>
