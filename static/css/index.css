@@ -933,6 +933,12 @@ h1 {
   aspect-ratio: 16 / 10;
 }
 
+.bloom-support-visual {
+  max-width: 1040px;
+  margin: 22px auto 0;
+  aspect-ratio: auto;
+}
+
 .followup-visual {
   margin-top: 18px;
   aspect-ratio: 16 / 9;
