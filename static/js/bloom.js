@@ -1,9 +1,9 @@
 const bloomData = [
-  { region: "Changwon", date: "Mar 24", day: 0, normal: -5, temp: 8.6, last7: 10.8, note: "The earliest 2026 bloom, opening the southern wave." },
-  { region: "Pohang", date: "Mar 26", day: 2, normal: -3, temp: 8.5, last7: 11.1, note: "Eastern coastal warmth kept flowering early." },
+  { region: "Changwon", date: "Mar 24", day: 0, normal: -5, temp: 8.6, last7: 10.8, note: "The earliest flowering date in the 2026 dataset." },
+  { region: "Pohang", date: "Mar 26", day: 2, normal: -3, temp: 8.5, last7: 11.1, note: "A late-March bloom on the east coast." },
   { region: "Daegu", date: "Mar 26", day: 2, normal: -3, temp: 8.1, last7: 10.9, note: "An inland early bloom among the late-March cluster." },
-  { region: "Busan", date: "Mar 26", day: 2, normal: -2, temp: 9.6, last7: 12.0, note: "A warm coastal signal with late-March flowering." },
-  { region: "Yeosu", date: "Mar 26", day: 2, normal: -5, temp: 8.7, last7: 11.0, note: "Southern marine influence supported early bloom timing." },
+  { region: "Busan", date: "Mar 26", day: 2, normal: -2, temp: 9.6, last7: 12.0, note: "A coastal station in the late-March bloom group." },
+  { region: "Yeosu", date: "Mar 26", day: 2, normal: -5, temp: 8.7, last7: 11.0, note: "A southern station in the late-March bloom group." },
   { region: "Ulsan", date: "Mar 28", day: 4, normal: -1, temp: 8.5, last7: 11.6, note: "A coastal industrial region in the early group." },
   { region: "Jeonju", date: "Mar 28", day: 4, normal: -6, temp: 7.3, last7: 11.0, note: "A late-March bloom after steady pre-flowering warming." },
   { region: "Jeju", date: "Mar 28", day: 4, normal: 3, temp: 9.9, last7: 12.9, note: "Warm, but later than its normal flowering date in 2026." },
