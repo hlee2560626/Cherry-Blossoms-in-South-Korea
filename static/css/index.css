@@ -1038,36 +1038,39 @@ h1 {
 }
 
 .evidence-section {
-  max-width: 1320px;
+  max-width: 1760px;
   margin: 0 auto;
+  padding-left: clamp(14px, 3vw, 46px);
+  padding-right: clamp(14px, 3vw, 46px);
 }
 
 .evidence-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
+  grid-template-columns: 1fr;
+  gap: clamp(24px, 4vw, 44px);
 }
 
 .evidence-grid figure {
   margin: 0;
-  padding: 14px;
-  border-radius: 26px;
+  padding: clamp(22px, 3.2vw, 42px);
+  border-radius: 34px;
 }
 
 .evidence-grid figure.figure-wide {
   grid-column: 1 / -1;
-  padding: clamp(16px, 2.5vw, 28px);
+  padding: clamp(22px, 3.2vw, 42px);
 }
 
 .evidence-grid img {
   width: 100%;
   aspect-ratio: 16 / 10;
   object-fit: contain;
-  border-radius: 18px;
+  border-radius: 22px;
   background: #fff;
 }
 
 .evidence-grid .figure-wide img {
+  width: 100%;
   max-height: none;
   aspect-ratio: auto;
 }
@@ -1107,21 +1110,53 @@ h1 {
 
 .evidence-grid figcaption {
   display: grid;
-  gap: 4px;
-  padding: 14px 4px 2px;
+  gap: 8px;
+  padding: 22px 4px 4px;
   color: var(--muted);
-  font-size: 0.92rem;
+  font-size: clamp(1.12rem, 1.5vw, 1.42rem);
   font-weight: 850;
 }
 
 .evidence-grid figcaption strong {
   color: var(--ink);
-  font-size: 1rem;
+  font-size: clamp(1.34rem, 2vw, 2.05rem);
+  line-height: 1.12;
 }
 
 .evidence-grid figcaption span {
   font-weight: 750;
-  line-height: 1.45;
+  line-height: 1.48;
+}
+
+.evidence-grid .evidence-visual {
+  min-height: clamp(560px, 58vw, 860px);
+  padding: clamp(24px, 3vw, 44px);
+}
+
+.evidence-grid .analysis-chart,
+.evidence-grid .temperature-bar-chart,
+.evidence-grid .phenology-strip-chart {
+  height: clamp(520px, 52vw, 760px);
+}
+
+.evidence-grid .bar-label,
+.evidence-grid .tick-label,
+.evidence-grid .axis-label,
+.evidence-grid .point-label {
+  font-size: 16px;
+}
+
+.evidence-grid .chart-note {
+  font-size: 15px;
+}
+
+.evidence-grid .chart-topline {
+  margin-bottom: 20px;
+  font-size: clamp(1.1rem, 1.5vw, 1.42rem);
+}
+
+.evidence-grid .chart-topline strong {
+  font-size: clamp(1.35rem, 2vw, 2rem);
 }
 
 .closing-section {
