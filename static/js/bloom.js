@@ -509,12 +509,12 @@ function drawKoreaHeatmap() {
     svg.appendChild(group);
   });
 
-  const north = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  /*const north = document.createElementNS("http://www.w3.org/2000/svg", "text");
   north.setAttribute("x", width - 208);
   north.setAttribute("y", "52");
   north.setAttribute("class", "map-note");
   north.textContent = "station positions use approximate coordinates";
-  svg.appendChild(north);
+  svg.appendChild(north);*/
 }
 
 function drawDateClusterChart() {
