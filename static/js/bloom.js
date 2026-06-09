@@ -359,7 +359,7 @@ function drawKoreaHeatmap() {
   const width = 720;
   const height = 610;
   const bounds = { minLon: 124.2, maxLon: 131.25, minLat: 33.05, maxLat: 38.35 };
-  const margin = { top: 38, right: 56, bottom: 42, left: 52 };
+  const margin = { top: 38, right: 80, bottom: 42, left: 28 };
   const innerW = width - margin.left - margin.right;
   const innerH = height - margin.top - margin.bottom;
   const project = ({ lon, lat }) => ({
