@@ -1046,7 +1046,7 @@ h1 {
 
 .evidence-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: clamp(24px, 4vw, 44px);
 }
 
