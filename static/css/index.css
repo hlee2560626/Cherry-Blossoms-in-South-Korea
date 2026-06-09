@@ -342,8 +342,8 @@ h1 {
 }
 
 .narrative-text {
-  text-align: justify;
-  text-justify: inter-word;
+  text-align: left;
+  /*text-justify: inter-word;*/
 }
 
 .metric-grid {
