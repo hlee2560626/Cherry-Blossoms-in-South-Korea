@@ -1245,11 +1245,6 @@ h1 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  /*.metric-grid,
-  .evidence-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }*/
-
   .site-footer {
     display: grid;
   }
