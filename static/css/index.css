@@ -1037,14 +1037,16 @@ h1 {
 .evidence-section {
   max-width: 1760px;
   margin: 0 auto;
-  padding-left: clamp(14px, 3vw, 46px);
-  padding-right: clamp(14px, 3vw, 46px);
+  padding-left: clamp(18px, 5vw, 72px);
+  padding-right: clamp(18px, 5vw, 72px);
 }
 
 .evidence-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: clamp(24px, 4vw, 44px);
+  max-width: 1240px;
+  margin:0 auto;
 }
 
 .evidence-grid figure {
